@@ -107,10 +107,10 @@ grails.hibernate.cache.queries = false
 
 environments {
   development {
-    println "/!\\ Note that OAuth features require an appropriate server url /!\\"
-    println "Current config for FB: http://localhost:9090"
     grails.logging.jul.usebridge = true
     if(!System.getenv("APP_LAN_URL")){
+      println "/!\\ Note that OAuth features require an appropriate server url /!\\"
+      println "Current config for FB: http://localhost:9090"
       println "No LAN address set, you can do it by setting APP_LAN_URL environment variable"
     }else{
       grails.serverURL = System.getenv("APP_LAN_URL")
@@ -150,14 +150,16 @@ grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.kott.short
 grails.plugin.springsecurity.authority.className = 'com.kott.shortener.Role'
 grails.plugin.springsecurity.facebook.domain.classname='com.kott.shortener.FBUser'
 grails.plugin.springsecurity.facebook.appId='697131890310012'
-if(!System.getenv("FP_APP_SECRET")){
+if(!System.getenv("FB_APP_SECRET")){
   throw new IllegalStateException("Please set FB_APP_SECRET environment variable.")
 }
 grails.plugin.springsecurity.facebook.secret=System.getenv("FP_APP_SECRET")
+
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   '/':                              ['permitAll'],
   '/index':                         ['permitAll'],
   '/index.gsp':                     ['permitAll'],
+  '/*':                             ['permitAll'],
   '/**/js/**':                      ['permitAll'],
   '/**/css/**':                     ['permitAll'],
   '/**/images/**':                  ['permitAll'],
