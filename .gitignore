@@ -19,7 +19,8 @@
 # general HSQL database files
 *Db.properties
 *Db.script
-*.h2
+*.db
+/h2db
 
 # logs
 /stacktrace.log
