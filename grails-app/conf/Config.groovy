@@ -15,28 +15,49 @@ grails.app.context = "/"
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 
 // The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
-grails.mime.disable.accept.header.userAgents = ['Gecko', 'WebKit', 'Presto', 'Trident']
+grails.mime.disable.accept.header.userAgents = [
+  'Gecko',
+  'WebKit',
+  'Presto',
+  'Trident'
+]
 grails.mime.types = [
-    all:           '*/*',
-    atom:          'application/atom+xml',
-    css:           'text/css',
-    csv:           'text/csv',
-    form:          'application/x-www-form-urlencoded',
-    html:          ['text/html','application/xhtml+xml'],
-    js:            'text/javascript',
-    json:          ['application/json', 'text/json'],
-    multipartForm: 'multipart/form-data',
-    rss:           'application/rss+xml',
-    text:          'text/plain',
-    hal:           ['application/hal+json','application/hal+xml'],
-    xml:           ['text/xml', 'application/xml']
+  all:           '*/*',
+  atom:          'application/atom+xml',
+  css:           'text/css',
+  csv:           'text/csv',
+  form:          'application/x-www-form-urlencoded',
+  html:          [
+    'text/html',
+    'application/xhtml+xml'
+  ],
+  js:            'text/javascript',
+  json:          [
+    'application/json',
+    'text/json'
+  ],
+  multipartForm: 'multipart/form-data',
+  rss:           'application/rss+xml',
+  text:          'text/plain',
+  hal:           [
+    'application/hal+json',
+    'application/hal+xml'
+  ],
+  xml:           [
+    'text/xml',
+    'application/xml']
 ]
 
 // URL Mapping Cache Max Size, defaults to 5000
 //grails.urlmapping.cache.maxsize = 1000
 
 // What URL patterns should be processed by the resources plugin
-grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
+grails.resources.adhoc.patterns = [
+  '/images/*',
+  '/css/*',
+  '/js/*',
+  '/plugins/*'
+]
 
 // Legacy setting for codec used to encode data with ${}
 grails.views.default.codec = "html"
@@ -47,24 +68,24 @@ grails.controllers.defaultScope = 'singleton'
 
 // GSP settings
 grails {
-    views {
-        gsp {
-            encoding = 'UTF-8'
-            htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
-            codecs {
-                expression = 'html' // escapes values inside ${}
-                scriptlet = 'html' // escapes output from scriptlets in GSPs
-                taglib = 'none' // escapes output from taglibs
-                staticparts = 'none' // escapes output from static template parts
-            }
-        }
-        // escapes all not-encoded output at final stage of outputting
-        filteringCodecForContentType {
-            //'text/html' = 'html'
-        }
+  views {
+    gsp {
+      encoding = 'UTF-8'
+      htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
+      codecs {
+        expression = 'html' // escapes values inside ${}
+        scriptlet = 'html' // escapes output from scriptlets in GSPs
+        taglib = 'none' // escapes output from taglibs
+        staticparts = 'none' // escapes output from static template parts
+      }
     }
+    // escapes all not-encoded output at final stage of outputting
+    filteringCodecForContentType {
+      //'text/html' = 'html'
+    }
+  }
 }
- 
+
 grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
@@ -85,39 +106,41 @@ grails.exceptionresolver.params.exclude = ['password']
 grails.hibernate.cache.queries = false
 
 environments {
-    development {
-        grails.logging.jul.usebridge = true
-        if(!System.getenv("APP_LAN_URL")){
-          println "No LAN address set, you can do it by setting APP_LAN_URL environment variable"
-        }else{
-          grails.serverURL = System.getenv("APP_LAN_URL")
-        }
+  development {
+    println "/!\\ Note that OAuth features require an appropriate server url /!\\"
+    println "Current config for FB: http://localhost:9090/"
+    grails.logging.jul.usebridge = true
+    if(!System.getenv("APP_LAN_URL")){
+      println "No LAN address set, you can do it by setting APP_LAN_URL environment variable"
+    }else{
+      grails.serverURL = System.getenv("APP_LAN_URL")
     }
-    production {
-        grails.logging.jul.usebridge = false
-        grails.serverURL = "http://www.changeme.com"
-    }
+  }
+  production {
+    grails.logging.jul.usebridge = false
+    grails.serverURL = "http://www.changeme.com"
+  }
 }
 
 // log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+  // Example of changing the log pattern for the default console appender:
+  //
+  //appenders {
+  //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+  //}
 
-    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-           'org.codehaus.groovy.grails.web.pages',          // GSP
-           'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-           'org.codehaus.groovy.grails.commons',            // core / classloading
-           'org.codehaus.groovy.grails.plugins',            // plugins
-           'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+  error  'org.codehaus.groovy.grails.web.servlet',        // controllers
+      'org.codehaus.groovy.grails.web.pages',          // GSP
+      'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+      'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+      'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+      'org.codehaus.groovy.grails.commons',            // core / classloading
+      'org.codehaus.groovy.grails.plugins',            // plugins
+      'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+      'org.springframework',
+      'org.hibernate',
+      'net.sf.ehcache.hibernate'
 }
 
 
@@ -125,13 +148,20 @@ log4j = {
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.kott.shortener.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.kott.shortener.UserRole'
 grails.plugin.springsecurity.authority.className = 'com.kott.shortener.Role'
+grails.plugins.springsecurity.facebook.domain.classname='com.kott.shortener.FBUser'
+grails.plugins.springsecurity.facebook.appId='697131890310012'
+if(!System.getenv("FP_APP_SECRET")){
+  throw new IllegalStateException("Please set FB_APP_SECRET environment variable.")
+}
+grails.plugins.springsecurity.facebook.secret=System.getenv("FP_APP_SECRET")
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-	'/':                              ['permitAll'],
-	'/index':                         ['permitAll'],
-	'/index.gsp':                     ['permitAll'],
-	'/**/js/**':                      ['permitAll'],
-	'/**/css/**':                     ['permitAll'],
-	'/**/images/**':                  ['permitAll'],
-	'/**/favicon.ico':                ['permitAll']
-]
+  '/':                              ['permitAll'],
+  '/index':                         ['permitAll'],
+  '/index.gsp':                     ['permitAll'],
+  '/**/js/**':                      ['permitAll'],
+  '/**/css/**':                     ['permitAll'],
+  '/**/images/**':                  ['permitAll'],
+  '/**/favicon.ico':                ['permitAll']]
+
+
 
