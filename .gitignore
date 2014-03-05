@@ -19,6 +19,7 @@
 # general HSQL database files
 *Db.properties
 *Db.script
+*.h2
 
 # logs
 /stacktrace.log
