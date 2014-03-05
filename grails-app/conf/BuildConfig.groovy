@@ -5,6 +5,8 @@ grails.project.test.reports.dir = "target/test-reports"
 grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
+grails.war.exploded = true
+grails.project.war.exploded.dir = "../shortener-cartridge/webapps/ROOT"
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 grails.project.fork = [
