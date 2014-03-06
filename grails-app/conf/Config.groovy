@@ -148,6 +148,7 @@ log4j = {
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.kott.shortener.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.kott.shortener.UserRole'
 grails.plugin.springsecurity.authority.className = 'com.kott.shortener.Role'
+grails.plugin.springsecurity.userLookup.usernamePropertyName = 'email'
 grails.plugin.springsecurity.facebook.domain.classname='com.kott.shortener.FBUser'
 grails.plugin.springsecurity.facebook.appId='697131890310012'
 if(!System.getenv("FB_APP_SECRET")){
@@ -164,9 +165,30 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   '/**/images/**':                  ['permitAll'],
   '/**/favicon.ico':                ['permitAll']]
 
+grails.plugin.springsecurity.roleHierarchy = '''
+   ROLE_ADMIN > ROLE_USER
+'''
+
 environments {
   production {
     grails.plugin.databasemigration.updateOnStart = true
     grails.plugin.databasemigration.updateOnStartFileNames = ["changelog.groovy"]
+  }
+}
+
+if(!System.getenv("APP_MAIL_USER") || !System.getenv("APP_MAIL_PWD")){
+  println "/!\\ set APP_MAIL_USER & APP_MAIL_PWD if you want email to work /!\\"
+}
+
+grails{
+  mail{
+    username = System.getenv("APP_MAIL_USER")
+    password = System.getenv("APP_MAIL_PWD")
+    host = "smtp.gmail.com"
+    port = 465
+    props = ["mail.smtp.auth":"true",
+      "mail.smtp.socketFactory.port":"465",
+      "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+      "mail.smtp.socketFactory.fallback":"false"]
   }
 }

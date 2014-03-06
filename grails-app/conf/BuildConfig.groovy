@@ -47,12 +47,15 @@ grails.project.dependency.resolution = {
     //mavenRepo "http://download.java.net/maven/2/"
     //mavenRepo "http://repository.jboss.com/maven2/"
     mavenRepo "http://repo.spring.io/milestone/"
+    mavenRepo "http://download.java.net/maven/2/"
   }
 
   dependencies {
+
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
     runtime 'mysql:mysql-connector-java:5.1.24'
     runtime 'c3p0:c3p0:0.9.1.2'
+
   }
 
   plugins {
@@ -60,7 +63,8 @@ grails.project.dependency.resolution = {
     build ":tomcat:7.0.42"
 
     // plugins for the compile step
-    compile ":scaffolding:2.0.1"
+    compile ":mail:1.0.1"
+    compile ":email-confirmation:2.0.8"
     compile ':cache:1.1.1'
     compile ":spring-security-core:2.0-RC2"
     compile ":spring-security-facebook:0.15.2-CORE2"
