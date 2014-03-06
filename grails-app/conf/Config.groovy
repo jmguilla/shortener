@@ -154,13 +154,19 @@ if(!System.getenv("FB_APP_SECRET")){
   throw new IllegalStateException("Please set FB_APP_SECRET environment variable.")
 }
 grails.plugin.springsecurity.facebook.secret=System.getenv("FP_APP_SECRET")
-
+grails.plugin.springsecurity.securityConfigType = "Annotation"
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   '/':                              ['permitAll'],
-  '/index':                         ['permitAll'],
-  '/index.gsp':                     ['permitAll'],
   '/*':                             ['permitAll'],
+  '/dbconsole/*':                   ['permitAll'],
   '/**/js/**':                      ['permitAll'],
   '/**/css/**':                     ['permitAll'],
   '/**/images/**':                  ['permitAll'],
   '/**/favicon.ico':                ['permitAll']]
+
+environments {
+  production {
+    grails.plugin.databasemigration.updateOnStart = true
+    grails.plugin.databasemigration.updateOnStartFileNames = ["changelog.groovy"]
+  }
+}
