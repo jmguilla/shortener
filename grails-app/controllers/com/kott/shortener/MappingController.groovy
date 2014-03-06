@@ -3,6 +3,8 @@ package com.kott.shortener
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 
+
+
 class MappingController {
 
   def mappingService
@@ -40,7 +42,8 @@ class MappingController {
         }else{
           Mapping mapping = mappingService.retrieveFromShortId(params.shortId)
           if(!mapping){
-            response.sendError(404, message(code: 'rest.mapping.notfound', default: "No mapping with such shortId: ${params.shortId}", args: [params.shortId]))
+            response.status = 404
+            render([alert: 'danger', message: message(code: 'rest.mapping.notfound', default: "No mapping with such shortId: ${params.shortId}", args: [params.shortId])] as JSON)
             return
           }else{
             render([(params.shortId): mapping] as JSON)
