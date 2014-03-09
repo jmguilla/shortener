@@ -1,0 +1,13 @@
+<div class="container">
+	<h1>Shorten Your url</h1>
+	<form class="form-inline" role="form" ng-submit="shortenUrl(longUrlText)">
+		<div class="form-group">
+			<label class="sr-only" for="">Long url</label> 
+			<input type="text"
+				class="form-control" id="longUrlText"
+				placeholder="Your long url here...">
+		</div>
+		<button type="submit" class="btn btn-default">Shorten me !</button>
+	</form>
+	<input type="text" class="form-control" value="{{currentShortUrl}}"/>
+</div>

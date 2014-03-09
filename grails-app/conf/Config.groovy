@@ -158,8 +158,12 @@ grails.plugin.springsecurity.facebook.secret=System.getenv("FP_APP_SECRET")
 grails.plugin.springsecurity.securityConfigType = "Annotation"
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   '/':                              ['permitAll'],
+  '/partials/**':					['permitAll'],
+  '/user/**':						['permitAll'],
   '/*':                             ['permitAll'],
   '/dbconsole/*':                   ['permitAll'],
+  '/logout/index':					['permitAll'],
+  '/*':                             ['permitAll'],
   '/**/js/**':                      ['permitAll'],
   '/**/css/**':                     ['permitAll'],
   '/**/images/**':                  ['permitAll'],
@@ -175,6 +179,7 @@ environments {
     grails.plugin.databasemigration.updateOnStartFileNames = ["changelog.groovy"]
   }
 }
+
 
 if(!System.getenv("APP_MAIL_USER") || !System.getenv("APP_MAIL_PWD")){
   println "/!\\ set APP_MAIL_USER & APP_MAIL_PWD if you want email to work /!\\"

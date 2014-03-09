@@ -12,7 +12,22 @@ class UserController {
 
   def emailConfirmationService
   def userService
+  def springSecurityService
 
+  def getUser() {
+	  def result = [:]
+	  def user = null
+	  if(springSecurityService.isLoggedIn()){
+		user = springSecurityService.getCurrentUser()
+	  }
+	  else{
+		  user = "not logged";
+	  }
+	  
+	  result.user = user
+	  render(result as JSON)
+	}
+  
   @Transactional
   @Secured(['permitAll'])
   def create(){
