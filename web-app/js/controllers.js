@@ -21,7 +21,7 @@ shortenerControllers.controller("MainCtrl",
 			}
 			
 			$scope.copyShortUrl = function(text){
-				window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+				$('#copyModal').modal('toggle');
 			}
 			
 		}

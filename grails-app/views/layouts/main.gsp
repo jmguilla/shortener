@@ -14,6 +14,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
         <script src="js/libs/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/libs/bootstrap.min.css">
+        <link rel="stylesheet" href="css/main.css">
        
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-resource.js"></script>
@@ -30,8 +31,7 @@
 		<r:layoutResources />
 	</head>
 	
-	<body 	class="container"
-			ng-app="shortener" 
+	<body	ng-app="shortener" 
 			ng-controller="MainCtrl">
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>

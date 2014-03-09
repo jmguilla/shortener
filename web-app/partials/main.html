@@ -1,12 +1,8 @@
-<div class="jumbotron">
+<div>
 	<h1>Shorten your url</h1>
 
 	<div id="resultDiv" class="row" ng-show="currentShortUrl != ''">
-		<div id="resultUrl" class="alert alert-success col-lg-11">{{currentShortUrl}}</div>
-		<div class="col-lg-1">
-			<button type="button" class="btn btn-info"
-				ng-click="copyShortUrl(currentShortUrl)">Copy</button>
-		</div>
+		<div id="resultUrl" class="alert alert-success col-lg-12">{{currentShortUrl}}</div>
 	</div>
 
 	<div id="valuesDiv" class="row">
