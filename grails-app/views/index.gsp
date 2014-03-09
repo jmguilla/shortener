@@ -27,9 +27,13 @@
                     <a class="navbar-brand" href="#">{{applicationName}}</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="">Contact</a></li>
-                    </ul>
+                    
+                    <sec:ifLoggedIn roles="ROLE_USER">
+	                    <ul class="nav navbar-nav navbar-right">
+				            <li><a href="#/userParams"><span class="glyphicon glyphicon-wrench"></span> My Account</a></li>
+				            <li><g:link controller="logout" action="index">Logout</g:link></li>
+				        </ul>
+                    </sec:ifLoggedIn>
                     <form class="navbar-form navbar-right" action='${request.contextPath}/j_spring_security_check' method='POST'>
                     	<!-- NOT logged -->
                         <sec:ifNotLoggedIn roles="ROLE_USER">
@@ -41,20 +45,10 @@
 	                        </div>
 	                        <button type="submit" id="submit" class="btn btn-success">${message(code: "springSecurity.login.button")}</button>
                         </sec:ifNotLoggedIn>
-                        <!-- logged -->
-                        <sec:ifLoggedIn roles="ROLE_USER">
-                        	<div class="form-group">	
-                        		<a class="form-control" href="#/userParams"><span class="glyphicon glyphicon-wrench"></span> My Account</a>
-                        	</div>
-                        	<div class="form-group">
-                        		<g:link class="form-control" controller="logout" action="index">Logout</g:link>
-                        	</div>
-                        </sec:ifLoggedIn>
                     </form>
                 </div><!--/.navbar-collapse -->
             </div>
         </div>
-        
 		<div>
 			<div ng-view></div>
 		</div>

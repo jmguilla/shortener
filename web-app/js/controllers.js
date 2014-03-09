@@ -5,10 +5,7 @@ shortenerControllers.controller("MainCtrl",
 		function($scope, Shortener) {
 			$scope.applicationName = "Shortney";
 			
-			$scope.init = function(user){
-				$scope.user = user;
-				console.log(user);
-			}
+			$scope.currentShortUrl = "";
 			
 			$scope.shortenUrl = function(longUrl){
 				Shortener.getShortenedUrl({},
@@ -22,6 +19,11 @@ shortenerControllers.controller("MainCtrl",
 						}
 					);
 			}
+			
+			$scope.copyShortUrl = function(text){
+				window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+			}
+			
 		}
 );
 
