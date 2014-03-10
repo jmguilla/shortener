@@ -39,6 +39,10 @@ body {
   
 }
 
+.textNoShadow {
+	text-shadow: none;
+}
+
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
   display: table;
@@ -82,12 +86,12 @@ body {
   font-weight: bold;
   color: #fff; /* IE8 proofing */
   color: rgba(255,255,255,.75);
-  border-bottom: 2px solid transparent;
 }
 .masthead-nav > li > a:hover,
 .masthead-nav > li > a:focus {
   background-color: transparent;
-  border-bottom-color: rgba(255,255,255,.25);
+  color: #fff; /* IE8 proofing */
+  color: rgba(255,255,255);
 }
 .masthead-nav > .active > a,
 .masthead-nav > .active > a:hover,
@@ -161,4 +165,34 @@ body {
   .cover-container {
     width: 700px;
   }
+}
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  height: 200px;
+  margin-bottom: 60px;
+  border-color: transparent;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+  border-color: transparent;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 200px;
+  background-color: transparent;
+  border-color: transparent;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 200px;
+  border-color: transparent;
 }
