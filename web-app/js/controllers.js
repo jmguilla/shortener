@@ -26,7 +26,7 @@ shortenerControllers.controller("MainCtrl",
 			$scope.currentShortUrl = "";
 			
 			$scope.shortenUrl = function(longUrl){
-				Shortener.getShortenedUrl({},
+				Shortener.getShortenedUrl({target: $scope.longUrlText},
 						function(data, headers){
 								console.log("shorten url : " + longUrl);
 								$scope.currentShortUrl = data.result;

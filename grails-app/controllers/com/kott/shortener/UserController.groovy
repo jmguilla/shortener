@@ -61,4 +61,20 @@ class UserController {
     }else{
     }
   }
+  
+  @Transactional
+  @Secured(['IS_AUTHENTICATED_FULLY'])
+  def update(){
+    withFormat{
+      html{
+        //renders the gsp
+      }
+      json{
+        render([
+          alert: 'success',
+          message: 'update performed (almost) successfully (reve pas hein... c\'pas fait)'
+        ])
+      }
+    }
+  }
 }
