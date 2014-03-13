@@ -1,9 +1,27 @@
 //Main controller
 var shortenerControllers = angular.module("shortenerControllers", []);
 
+shortenerControllers.controller("NavCtrl",
+		function($scope, $location) {
+			$scope.isActive = function (viewLocation) { 
+				var pathe = $location.path();
+//				console.log('path var ::::: ' + pathe);
+//				console.log('param ::::: ' + viewLocation);
+		        return viewLocation === $location.path();
+		    };
+		    // Watch for the $location
+		    scope.$watch(function() {
+		    	return $location.path();
+		    }, function(newValue, oldValue) {
+		    	console.log("old value : " + oldValue)
+		    }
+		    )
+		}
+);
+
 shortenerControllers.controller("MainCtrl",
 		function($scope, Shortener) {
-			$scope.applicationName = "Shortney";
+			$scope.applicationName = "Shaddy";
 			
 			$scope.currentShortUrl = "";
 			
