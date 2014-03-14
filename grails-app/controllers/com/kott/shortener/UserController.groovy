@@ -14,6 +14,7 @@ class UserController {
   def emailConfirmationService
   def userService
   def springSecurityService
+  def saltSource
 
   def getUser() {
     def result = [:]
@@ -63,12 +64,18 @@ class UserController {
     }
   }
 
-  @Transactional
+  /**
+   * To update a user's details. So far, only "username" can be updated.
+   * curl -X POST -d "{'username': 'monusername'}" -> since authentication is required, doesn't work with curl...
+   * 
+   * @return
+   */
   @Secured(['IS_AUTHENTICATED_FULLY'])
+  @Transactional
   def update(){
     try{
       User me = springSecurityService.getCurrentUser()
-      bindData(me, request.JSON)
+      bindData(me, request.JSON, [include: ['username']])
       me.save(failOnError: true, flush: true)
       render ( [alert: 'success', message: message(code: 'user.update.success', default: 'Update performed successfully')] as JSON)
     }catch(Throwable t){
@@ -78,7 +85,14 @@ class UserController {
     }
   }
 
+  /**
+   * To update a user's password.
+   * curl -X POST -d "{'current': 'currentPWD', 'newPWD': 'monNewPwd', 'newPWDAgain': 'monNewPwd'}" -> since authentication is required, doesn't work with curl...
+   *
+   * @return
+   */
   @Secured(['IS_AUTHENTICATED_FULLY'])
+  @Transactional
   def updatePWD(){
     def current = request.JSON.current
     def newPWD = request.JSON.newPWD
@@ -94,7 +108,7 @@ class UserController {
       return
     }
     def user = springSecurityService.getCurrentUser()
-    def userDetails = springSecurityService.userDetailsService.loadUserByUsername(user.username)
+    def userDetails = springSecurityService.userDetailsService.loadUserByUsername(user.email)
     def salt = saltSource.getSalt(userDetails)
     if(!springSecurityService.passwordEncoder.isPasswordValid(userDetails.password, current, salt)){
       response.status = 400

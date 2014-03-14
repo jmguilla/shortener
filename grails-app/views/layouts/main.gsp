@@ -54,7 +54,7 @@
 									<sec:ifLoggedIn roles="ROLE_USER">
 										<li><a href="#/userParams"><span
 												class="glyphicon glyphicon-cog"></span> My Account</a></li>
-										<li><g:link controller="logout" action="index">Logout</g:link></li>
+										<li><g:link url="/j_spring_security_logout" controller="logout" action="index">Logout</g:link></li>
 									</sec:ifLoggedIn>
 								</ul>
 							</div>
