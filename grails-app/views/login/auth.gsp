@@ -11,19 +11,16 @@
 
 	<body>
 	
-		<g:render template="/shared/alerts" />
-	
 		<div class="container">
+		
+			<g:render template="/shared/alerts" />
+			
 			<sec:ifNotLoggedIn roles="ROLE_USER">
 				<div class="row">
 				
 					<div class="col-lg-6 col-lg-offset-3">
 						
-						<div class="well bs-component text-center" >
-							<button type="submit" class="btn btn-lg btn-success">Facebook</button>
-						</div>
-						
-						<div class="well bs-component">
+						<div class="well">
 		
 							<form class="form-horizontal" id="loginForm"
 								action='${request.contextPath}/j_spring_security_check'
@@ -52,12 +49,17 @@
 								</fieldset>
 							</form>
 						</div>
+						
+						
+						<div class="well text-center" >
+							<facebookAuth:connect/>
+						</div>
 					</div>
 				</div>
 			</sec:ifNotLoggedIn>
 		
 			<sec:ifLoggedIn>
-					You are logged
+					You are logged... what the f*** are you doin here !?
 			</sec:ifLoggedIn>
 		</div>
 	

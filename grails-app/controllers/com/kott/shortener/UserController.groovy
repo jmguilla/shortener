@@ -69,8 +69,19 @@ class UserController {
    * Display view of user parameters
    * @return
    */
+  @Secured(['IS_AUTHENTICATED_FULLY'])
   def show(){
 	  String view = 'show'
+	  render view: view
+  }
+  
+  /**
+   * Display view of user urls
+   * @return
+   */
+  @Secured(['IS_AUTHENTICATED_FULLY'])
+  def listUrls(){
+	  String view = 'urls'
 	  render view: view
   }
     

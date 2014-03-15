@@ -11,6 +11,9 @@
 	<body>
 	
 		<div class="container">
+			
+			<g:render template="/shared/alerts" />
+		
 			<sec:ifNotLoggedIn roles="ROLE_USER">
 				<div class="jumbotron">
 					<div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -82,7 +85,7 @@
 							<div class="form-group">
 								<label class="sr-only" for="">Long url</label> <input type="text"
 									class="form-control" id="longUrlText" ng-model="longUrlText"
-									placeholder="Your long url here...">
+									placeholder="Your url here...">
 							</div>
 							<button type="submit" class="btn btn-lg btn-success lead">Shorten
 								me !</button>

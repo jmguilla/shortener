@@ -2,39 +2,60 @@
 var shortenerControllers = angular.module("shortenerControllers", []);
 
 shortenerControllers.controller("MainCtrl",
-		function($scope, Shortener) {
+		function($scope, Shortener, $timeout) {
 			$scope.applicationName = "Shaddy";
+			
+			$scope.alerts = [];
 			
 			$scope.currentShortUrl = "";
 			
 			$scope.shortenUrl = function(longUrl){
-				if($scope.longUrlText != null && $scope.longUrlText != undefined){
+				
+				if($scope.longUrlText != null && $scope.longUrlText != undefined && $scope.longUrlText != ""){
 					Shortener.getShortenedUrl({target: $scope.longUrlText},
 						function(data, headers){
-								console.log("shorten url : " + longUrl);
 								$scope.currentShortUrl = data.result;
 						},
 						function(httpResponse){
-							console.log("problem shortening url : " + longUrl);
-							$scope.alerts.push({type: 'danger', content: 'Un probleme s\'est produit: ' + httpResponse.data});
+							$scope.addAlert('danger', 'Un probleme s\'est produit: ' + httpResponse.data, 4000);
 						}
 					);
 				}
 				else{
-					$scope.alerts.push({type: 'danger', content: 'url is empty'});
+					$scope.addAlert('danger', 'You must provide an url', 3000);
 				}
 			}
 			
 			$scope.copyShortUrl = function(text){
 				$('#copyModal').modal('toggle');
 			}
+
+			/**
+			 * Add an alert removed automatically
+			 */
+			$scope.addAlert = function(type, message, timeout) {
+				
+				var alert = {type:type, content:message};    
+				$scope.alerts.push(alert);
+				
+				if (!timeout) {
+					timeout = 3000;
+				}
+				$timeout(function(){
+					$scope.closeAlert($scope.alerts.indexOf(alert));
+				}, timeout);
+			};
+
+			$scope.closeAlert = function(index) {
+				$scope.alerts.splice(index, 1);
+			};
 			
 		}
 );
 
 shortenerControllers.controller("UserCtrl",
 		function($scope, User) {
-			console.log("userCtrl create");
+	
 			User.getUser({},
 					function(data, headers){
 						console.log("get user : " + data.user);
@@ -42,8 +63,27 @@ shortenerControllers.controller("UserCtrl",
 					},
 					function(httpResponse){
 						console.log("problem get user");
-						$scope.alerts.push({type: 'danger', content: 'Un probleme s\'est produit: ' + httpResponse.data});
+						$scope.alerts.push({type: 'danger', content: 'Erreur : ' + httpResponse.data});
 					});
+			
+			$scope.updatePWD = function(current, newPWD, newPWDAgain){
+				User.updatePWD({current:current, newPWD:newPWD, newPWDAgain:newPWDAgain},
+					function(data, headers){
+						$scope.handleHTTPResponse(data);
+						// reset fields
+						$scope.currentPWD = "";
+						$scope.newPWD = "";
+						$scope.newPWDAgain = "";
+					},
+					function(httpResponse){
+						$scope.handleHTTPResponse(httpResponse.data, "Erreur : ");
+					});	
+			}
+			
+			$scope.handleHTTPResponse = function(data, msg){
+				if(!msg) msg = '';
+				$scope.alerts.push({type: data.alert, content:msg + data.message});
+			}
 		}
 );
 
