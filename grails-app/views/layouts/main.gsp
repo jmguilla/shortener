@@ -61,7 +61,7 @@
 				<sec:ifLoggedIn roles="ROLE_USER">
 					<li class="${(controllerName == 'user' ) ? 'active' : ''}"><g:link controller="user" action="show"><span
 							class="glyphicon glyphicon-cog"></span> My Account</g:link></li>
-					<li><g:link controller="logout" action="index">Logout</g:link></li>
+					<li><g:link url="/j_spring_security_logout" controller="logout" action="index">Logout</g:link></li>
 				</sec:ifLoggedIn>
 	          </ul>
 	
