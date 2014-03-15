@@ -107,7 +107,7 @@ class UserController {
    */
   @Secured(['IS_AUTHENTICATED_FULLY'])
   def listUrls(){
-	  String view = 'urls'
+	  String view = 'listUrls'
 	  respond(view: view)
   }
     

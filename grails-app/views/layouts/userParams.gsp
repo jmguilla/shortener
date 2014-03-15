@@ -46,7 +46,7 @@
 					<ul class="nav nav-pills nav-stacked">
 					  <li class="${(controllerName == 'user' && actionName == 'show' ) ? 'active' : ''}"><g:link
 							controller="user" action="show">Informations</g:link></li>
-					  <li class="${(controllerName == 'user' && actionName == 'urls' ) ? 'active' : ''}"><g:link
+					  <li class="${(controllerName == 'user' && actionName == 'listUrls' ) ? 'active' : ''}"><g:link
 							controller="user" action="listUrls">
 							<span class="badge pull-right">xx</span>My urls</g:link>
 					  </li>
