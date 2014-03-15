@@ -98,7 +98,7 @@ class UserController {
   @Secured(['IS_AUTHENTICATED_FULLY'])
   def show(){
 	  String view = 'show'
-	  render view: view
+	  respond(view: view)
   }
   
   /**
@@ -108,7 +108,7 @@ class UserController {
   @Secured(['IS_AUTHENTICATED_FULLY'])
   def listUrls(){
 	  String view = 'urls'
-	  render view: view
+	  respond(view: view)
   }
     
   /**
