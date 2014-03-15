@@ -158,12 +158,12 @@ grails.plugin.springsecurity.facebook.secret=System.getenv("FP_APP_SECRET")
 grails.plugin.springsecurity.securityConfigType = "Annotation"
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   '/':                              ['permitAll'],
-  '/partials/**':					['permitAll'],
-  '/user/**':						['permitAll'],
+  '/partials/**':					          ['permitAll'],
+  '/user/**':						            ['permitAll'],
   '/*':                             ['permitAll'],
   '/dbconsole/*':                   ['permitAll'],
-  '/logout/index':					['permitAll'],
-  '/*':                             ['permitAll'],
+  '/logout/index':					        ['permitAll'],
+  '/emailConfirmation/*':           ['permitAll'],
   '/**/js/**':                      ['permitAll'],
   '/**/css/**':                     ['permitAll'],
   '/**/images/**':                  ['permitAll'],

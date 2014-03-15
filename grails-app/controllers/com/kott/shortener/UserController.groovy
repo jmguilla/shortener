@@ -9,7 +9,7 @@ import com.kott.shortener.user.exceptions.CannotCreateUserException
 
 class UserController {
 
-  static allowedMethods = [create: 'POST', update: 'POST', updatePWD: 'POST']
+  static allowedMethods = [create: ['POST', 'GET'], update: 'POST', updatePWD: 'POST', confirmed: 'GET']
 
   def emailConfirmationService
   def userService
@@ -29,6 +29,19 @@ class UserController {
     result.user = user
     render(result as JSON)
   }
+  
+  @Transactional
+  @Secured(['permitAll'])
+  def confirmed(){
+    User user = User.findWhere(email: params.email)
+    if(!user){
+      return [uri:'/', args:[alert: 'danger', message: message(code: 'user.confirmation.failure', default: 'No user with such email in our DB: {0}', args: [params.email])]]
+    }else{
+      user.enabled = true
+      user.save(failOnError: true, flush: true)
+      return [uri:'/', args:[alert: 'success', message: message(code: 'user.confirmation.success', default: 'Thanks for having confirmed your email.')]]
+    }
+  }
 
   @Transactional
   @Secured(['permitAll'])
@@ -36,16 +49,17 @@ class UserController {
     def result = null
     if(request.post){
       //creating a new user
-      String email = params.email
-      String pwd = params.pwd
+      String email = request.JSON.email
+      String pwd = request.JSON.pwd
       if(!email || !pwd){
         result = [alert: 'danger', message: message(code: 'user.create.missingparams', default: 'Email and passwords are required.')]
       }else{
         try{
           User newUser = userService.create(email, pwd)
           emailConfirmationService.sendConfirmation(
-              to:newUser.email,
-              subject:"Please confirm!")
+              from: message(code: 'user.create.email.from'),
+              to: newUser.email,
+              subject: message(code: 'user.create.email.title'))
           result = [alert: 'success', message: message(code: 'user.create.success', default: 'User created!!')]
         }catch(CannotCreateUserException ccue){
           result = [alert: 'danger', message: message(code: 'user.create.failure', default: 'Cannot create user {0}', args:[

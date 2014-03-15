@@ -10,6 +10,8 @@ import com.kott.shortener.user.exceptions.CannotCreateUserException
 @Transactional
 class UserService {
 
+  def messageSource
+  
   @Transactional(propagation = Propagation.MANDATORY)
   def create(String email, String pwd) {
     User newUser = new User(email: email, password: pwd, enabled: false)
@@ -19,16 +21,15 @@ class UserService {
     }
     return newUser
   }
-
-  //  @grails.events.Listener(topic:'confirmed', namespace:'plugin.emailConfirmation')
-  //  def userConfirmed(info) {
-  //    log.info "User ${info.email} successfully confirmed with application id data ${info.id}"
-  //    return [controller:'userProfile', action:'welcomeNewUser']
-  //  }
-
-  @Listener
+  
+  @Listener(topic= 'confirmed', namespace= 'plugin.emailConfirmation')
   def userConfirmed(info){
     log.info "User ${info.email} successfully confirmed with application id data ${info.id}"
-    return [controller:'user', action:'welcomeNewUser']
+    return [controller: 'user', action: 'confirmed', params: info]
+  }
+
+  @Listener(topic='timeout', namespace='plugin.emailConfirmation')
+  def userConfirmationTimedOut(info) {
+    log.info "A user failed to confirm, the token in their link was ${info.token}"
   }
 }
