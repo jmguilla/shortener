@@ -6,6 +6,7 @@ import grails.transaction.Transactional
 
 import com.kott.shortener.user.exceptions.CannotCreateUserException
 
+
 class UserController {
 
   static allowedMethods = [create: 'POST', update: 'POST', updatePWD: 'POST']
@@ -29,9 +30,8 @@ class UserController {
 	  render(result as JSON)
 	}
   
-
   def saltSource
-  
+
   @Transactional
   @Secured(['permitAll'])
   def create(){
