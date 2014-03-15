@@ -6,6 +6,10 @@ import grails.transaction.Transactional
 
 import com.kott.shortener.user.exceptions.CannotCreateUserException
 
+/**
+ * @author Wildduck
+ *
+ */
 class UserController {
 
   static allowedMethods = [create: 'POST']
@@ -13,8 +17,8 @@ class UserController {
   def emailConfirmationService
   def userService
   def springSecurityService
-
-  def getUser() {
+  
+  def retrieveUserAsJson() {
 	  def result = [:]
 	  def user = null
 	  if(springSecurityService.isLoggedIn()){
@@ -52,7 +56,6 @@ class UserController {
         }
 
       }
-      //TODO maybe that can be moved at the bottom of the method
       if(request.xhr){
         render(result as JSON)
       }else{
@@ -62,6 +65,15 @@ class UserController {
     }
   }
   
+  /**
+   * Display view of user parameters
+   * @return
+   */
+  def show(){
+	  String view = 'show'
+	  render view: view
+  }
+    
   @Transactional
   @Secured(['IS_AUTHENTICATED_FULLY'])
   def update(){

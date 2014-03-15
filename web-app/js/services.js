@@ -5,7 +5,7 @@ shortenerServices.factory('User', function($resource){
 		getUser: {
 			method: 'GET',
 			params: {
-				actionId: 'getUser'
+				actionId: 'retrieveUserAsJson'
 			},
 			headers: {
   			'Content-Type': 'application/json',
