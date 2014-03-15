@@ -23,7 +23,7 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.js"></script>
 		
 		<title>
-			<g:layoutTitle default="Shortener"/>
+			<g:layoutTitle default="Shaddy"/>
 		</title>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,41 +34,11 @@
 	<body	ng-app="shortener" 
 			ng-controller="MainCtrl">
 			
-			<div class="site-wrapper">
-	
-				<div class="site-wrapper-inner">
-		
-					<div class="cover-container">
-		
-						<div class="masthead clearfix">
-							<div class="inner">
-								<h3 class="masthead-brand">{{applicationName}}</h3>
-					            <ul class="nav masthead-nav">
-									<li><a href="/#"><span
-												class="glyphicon glyphicon-home"></span> Home</a></li>
-									<sec:ifNotLoggedIn roles="ROLE_USER">
-										<li><g:link controller="login" action="auth">
-													<span class="glyphicon glyphicon-user"></span> Login</g:link></li>
-										<li><g:link controller="user" action="create"> Register</g:link></li>
-									</sec:ifNotLoggedIn>
-									<sec:ifLoggedIn roles="ROLE_USER">
-										<li><a href="#/userParams"><span
-												class="glyphicon glyphicon-cog"></span> My Account</a></li>
-										<li><g:link url="/j_spring_security_logout" controller="logout" action="index">Logout</g:link></li>
-									</sec:ifLoggedIn>
-								</ul>
-							</div>
-						</div>
 			
-					<g:layoutBody/>
+		<g:render template="/shared/nav" />
 		
+		<g:layoutBody/>
 		
-				</div>
-			</div>
-		</div>
-		
-		<div class="footer" role="contentinfo"></div>
-		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 		<g:javascript library="application"/>
 		<r:layoutResources />
 	</body>

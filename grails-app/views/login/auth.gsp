@@ -1,65 +1,74 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name='layout' content='main'/>
-		
-		<title><g:message code="springSecurity.login.title"/></title>
-		
-		<r:require module="application"/>
-		
-	</head>
+	<meta name='layout' content='main' />
 	
+	<title><g:message code="springSecurity.login.title" /></title>
+	
+	<r:require module="application" />
+	
+	</head>
+
 	<body>
 	
-		<!-- ALERT AREA -->
-		<g:if test='${flash.message}'>
-			<div class="alert alert-danger fade in">
-		      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		      <div class="textNoShadow">
-		      	<span>${flash.message}</span>
-		      </div>
-		    </div>
-	    </g:if>
+		<div class="container">
 		
-		<sec:ifNotLoggedIn roles="ROLE_USER">
-			<h2 class="cover-heading">Please connect</h2>
-			<form class="inner"
-				id="loginForm"
-				action='${request.contextPath}/j_spring_security_check'
-				method='POST'>
-				<!-- NOT logged -->
-				<div class="form-group">
-					<input id='username' name='j_username'
-							type="text" placeholder="Email" class="form-control">
-				</div>
-				<div class="form-group">
-					<input id='password' name='j_password'
-							type="password" placeholder="Password" class="form-control">
-				</div>
-				<div class="form-group">
-					<button type="submit" id="submit" class="btn btn-success">
-						${message(code: "springSecurity.login.button")}
-					</button>
-				</div>
-				<div class="form-group">
-					<div style="height: 2px; background-color: lightgrey; text-align: center">
-					  <span style="background-color: #424; position: relative; top: -0.7em;"><b>OR</b></span>
+			<g:render template="/shared/alerts" />
+			
+			<sec:ifNotLoggedIn roles="ROLE_USER">
+				<div class="row">
+				
+					<div class="col-lg-6 col-lg-offset-3">
+						
+						<div class="well">
+		
+							<form class="form-horizontal" id="loginForm"
+								action='${request.contextPath}/j_spring_security_check'
+								method='POST'>
+								<fieldset>
+									<!-- NOT logged -->
+									<div class="form-group">
+										<label for="username" class="col-lg-2 control-label">Email</label>
+										<div class="col-lg-10">
+											<input id='username' name='j_username' type="text"
+													placeholder="Email" class="form-control">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="password" class="col-lg-2 control-label">Password</label>
+										<div class="col-lg-10">
+											<input id='password' name='j_password' type="password"
+													placeholder="Password" class="form-control">
+										</div>
+									</div>
+									<div class="text-center">
+										<button type="submit" id="submit" class="btn btn-lg btn-success">
+											${message(code: "springSecurity.login.button")}
+										</button>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+						
+						
+						<div class="well text-center" >
+							<facebookAuth:connect/>
+						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-success">Facebook</button>
-				</div>
-			</form>
-		</sec:ifNotLoggedIn>
-		<sec:ifLoggedIn>
-			You are logged
-		</sec:ifLoggedIn>
+			</sec:ifNotLoggedIn>
+		
+			<sec:ifLoggedIn>
+					You are logged... what the f*** are you doin here !?
+			</sec:ifLoggedIn>
+		</div>
+	
 		<script type='text/javascript'>
-			<!--
+		<!--
 			(function() {
-				document.forms['loginForm'].elements['email'].focus();
+				document.forms['loginForm'].elements['username'].focus();
 			})();
-			// -->
+		// -->
 		</script>
 	</body>
 </html>

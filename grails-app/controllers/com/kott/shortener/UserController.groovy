@@ -15,6 +15,20 @@ class UserController {
   def userService
   def springSecurityService
   def saltSource
+  
+  def retrieveUserAsJson() {
+	  def result = [:]
+	  def user = null
+	  if(springSecurityService.isLoggedIn()){
+		user = springSecurityService.getCurrentUser()
+	  }
+	  else{
+		  user = "not logged";
+	  }
+	  
+	  result.user = user
+	  render(result as JSON)
+	}
 
   def getUser() {
     def result = [:]
@@ -68,7 +82,6 @@ class UserController {
         }
 
       }
-      //TODO maybe that can be moved at the bottom of the method
       if(request.xhr){
         render(result as JSON)
       }else{
@@ -77,7 +90,27 @@ class UserController {
     }else{
     }
   }
-
+  
+  /**
+   * Display view of user parameters
+   * @return
+   */
+  @Secured(['IS_AUTHENTICATED_FULLY'])
+  def show(){
+	  String view = 'show'
+	  render view: view
+  }
+  
+  /**
+   * Display view of user urls
+   * @return
+   */
+  @Secured(['IS_AUTHENTICATED_FULLY'])
+  def listUrls(){
+	  String view = 'urls'
+	  render view: view
+  }
+    
   /**
    * To update a user's details. So far, only "username" can be updated.
    * curl -X POST -d "{'username': 'monusername'}" -> since authentication is required, doesn't work with curl...
