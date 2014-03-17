@@ -8,61 +8,18 @@
 		<r:require module="application" />
 	
 	</head>
-	<body>
-		<form class="form-horizontal">
+	<body >
+		<form class="form-horizontal" ng-controller="UserCtrl">
 			
 			<!-- PASSWORD -->
 			<div class="well">
 				<div class="form-group">
-					<label for="password" class="col-lg-2 control-label">Password</label>
-					<div class="col-lg-10">
-						<button type="submit" class="btn btn-primary" 
-								data-toggle="modal" data-target="#PWDModal">Change</button>
+					<label for="password" class="col-xs-2 col-md-2 col-lg-2 control-label">Password</label>
+					<div class="col-xs-8 col-xs-offset-2 col-md-10 col-md-offset-0 col-lg-10 col-lg-offset-0">
+						<div>
+						    <button class="btn btn-success" ng-click="openPWDModal()">Change</button>
+						</div>
 					</div>
-					
-					<!-- PWD Modal Window -->
-					<!-- TODO : add alert in the modal, close it only on success => use angular ui dialog -->
-					<div class="modal fade" id="PWDModal" tabindex="-1" role="dialog" 
-							aria-labelledby="myModalLabel" aria-hidden="true">
-					  <div class="modal-dialog">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					        <h4 class="modal-title" id="myModalLabel">Change Password</h4>
-					      </div>
-					      <div class="modal-body">
-					        	<div class="form-group">
-									<label for="currentPWDText" class="col-lg-2 control-label">Current</label>
-									<div class="col-lg-10">
-										<input type="password"
-											class="form-control" id="currentPWDText" ng-model="currentPWD" value="">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="newPWDText" class="col-lg-2 control-label">New</label>
-									<div class="col-lg-10">
-										<input type="password"
-											class="form-control" id="newPWDText" ng-model="newPWD">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="newPWDAgainText" class="col-lg-2 control-label">Confirm</label>
-									<div class="col-lg-10">
-										<input type="password"
-											class="form-control" id="newPWDAgainText" ng-model="newPWDAgain">
-									</div>
-								</div>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					        <button type="button" class="btn btn-primary" data-dismiss="modal"
-					        		ng-click="updatePWD(currentPWD, newPWD, newPWDAgain)">Validate</button>
-					      </div>
-					    </div>
-					  </div>
-					</div>
-					<!-- END PWD Modal Window -->
-					
 				</div>
 			</div>
 			
@@ -83,8 +40,10 @@
 							class="form-control" id="username" value="{{user.username}}">
 					</div>
 				</div>
-				<div class="text-center">
-					<button type="submit" class="btn btn-lg btn-success">Save changes</button>
+				<div class="form-group">
+					<div class="col-lg-10 col-lg-offset-2">
+						<button type="submit" class="btn btn-success">Save changes</button>
+					</div>
 				</div>
 			</div>
 			

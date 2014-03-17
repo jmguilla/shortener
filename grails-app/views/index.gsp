@@ -25,9 +25,6 @@
 				      </ol>
 				      <div class="carousel-inner">
 				        <div class="item active">
-				        <!-- 
-				          <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:First slide" alt="First slide">
-				          -->
 				          <div class="container">
 				            <div class="carousel-caption">
 				              <h1>Step ONE</h1>
@@ -36,9 +33,6 @@
 				          </div>
 				        </div>
 				        <div class="item">
-				        <!-- 
-				          <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:Second slide" alt="Second slide">
-				           -->
 				          <div class="container">
 				            <div class="carousel-caption">
 				              <h1>Step TWO</h1>
@@ -47,9 +41,6 @@
 				          </div>
 				        </div>
 				        <div class="item">
-				        <!-- 
-				          <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:Third slide" alt="Third slide">
-				        -->
 				          <div class="container">
 				            <div class="carousel-caption">
 				              <h1>Step THREE</h1>
@@ -72,24 +63,39 @@
 	    		</div>
 			</sec:ifNotLoggedIn>
 			<sec:ifLoggedIn roles="ROLE_USER">
-				<div class="text-center">
+				<div class="text-center col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 					<h1>Shorten your url</h1>
 				
-					<div id="resultDiv" class="row" ng-show="currentShortUrl != ''">
-						<div id="resultUrl" class="alert alert-success col-lg-12"
-								ng-bind="currentShortUrl"></div>
+					<div id="result" collapse="currentShortUrl == ''">
+						<div class="row">
+							<div id="resultUrl" class="alert alert-success slide" ng-cloak>
+								<button ng-click="clearResult()" type="button"
+									class="close" aria-hidden="true">&times;</button>
+								<span ng-bind="currentShortUrl"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div id="share" class="col-md-3 col-md-offset-3 col-lg-3 col-lg-offset-3">
+								facebook / twitter
+							</div>
+							<div id="edit" class="col-md-3 col-lg-3">
+								edit / delete
+							</div>
+						</div>
 					</div>
 				
 					<div id="valuesDiv" class="row">
 						<form class="form" role="form" ng-submit="shortenUrl(longUrlText)">
 							<div class="form-group">
-								<label class="sr-only" for="">Long url</label> <input type="text"
-									class="form-control" id="longUrlText" ng-model="longUrlText"
+								<label class="sr-only" for="">Long url</label> 
+								<input type="text"
+									class="form-control text-center" id="longUrlText" ng-model="longUrlText"
 									placeholder="Your url here...">
 							</div>
-							<button type="submit" class="btn btn-lg btn-success lead">Shorten
-								me !</button>
-				
+							<div class="form-group">
+								<button type="submit" class="btn btn-lg btn-success lead">Shorten
+									me !</button>
+							</div>
 						</form>
 					</div>
 				</div>

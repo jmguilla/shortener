@@ -1,3 +1,6 @@
+/* necessary hack angular.ui */ 
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
 /*
  * Custom items
  */
@@ -13,7 +16,7 @@
 
 /* Carousel base class */
 .carousel {
-  height: 200px;
+  height: 170px;
   margin-bottom: 60px;
   border-color: transparent;
 }
@@ -26,7 +29,7 @@
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 200px;
+  height: 170px;
   background-color: transparent;
   border-color: transparent;
 }

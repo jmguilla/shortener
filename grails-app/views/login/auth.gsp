@@ -12,13 +12,13 @@
 	<body>
 	
 		<div class="container">
-		
-			<g:render template="/shared/alerts" />
 			
 			<sec:ifNotLoggedIn roles="ROLE_USER">
 				<div class="row">
 				
 					<div class="col-lg-6 col-lg-offset-3">
+						
+						<g:render template="/shared/alerts" />
 						
 						<div class="well">
 		

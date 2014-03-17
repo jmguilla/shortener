@@ -85,7 +85,7 @@ class UserController {
       if(request.xhr){
         render(result as JSON)
       }else{
-        flash.result = result
+         render (result as JSON)
       }
     }else{
     }

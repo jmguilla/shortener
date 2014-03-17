@@ -10,36 +10,31 @@
 	</head>
 	<body>
 		<!--  TODO : everything, MOCKED UP ! -->
-	
-		<div class="panel-group" id="accordion">
-		  <div class="panel panel-default">
-		    <div class="panel-heading">
-		      <h4 class="panel-title">
-		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-		          <span class="badge pull-right">xx clicks</span>URL 1
-		        </a>
-		      </h4>
-		    </div>
-		    <div id="collapseOne" class="panel-collapse collapse in">
-		      <div class="panel-body">
-		        URL details TODO
-		      </div>
-		    </div>
-		  </div>
-		  <div class="panel panel-default">
-		    <div class="panel-heading">
-		      <h4 class="panel-title">
-		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-		          <span class="badge pull-right">xx clicks</span>URL 2
-		        </a>
-		      </h4>
-		    </div>
-		    <div id="collapseTwo" class="panel-collapse collapse">
-		      <div class="panel-body">
-		        URL details TODO
-		      </div>
-		    </div>
-		  </div>
+		<div class="table-responsive">
+			<table class="table table-hover table-striped">
+				<thead>
+				  <tr>
+				    <th>col1</th>
+				    <th>col2</th>
+				  </tr>
+				</thead>
+				<tr>
+					<td>test1</td>
+					<td>test2</td>
+				</tr>
+				<tr>
+					<td>test1</td>
+					<td>test2</td>
+				</tr>
+				<tr>
+					<td>test1</td>
+					<td>test2</td>
+				</tr>
+				<tr>
+					<td>test1</td>
+					<td>test2</td>
+				</tr>
+			</table>
 		</div>
 	</body>
 

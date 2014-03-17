@@ -1,7 +1,7 @@
 <div class="navbar navbar-default">
 	<div class="container">
 		<div class="navbar-header">
-			<a href="../" class="navbar-brand">{{applicationName}}</a>
+			<a href="/" class="navbar-brand">{{applicationName}}</a>
 			<button class="navbar-toggle" type="button" data-toggle="collapse"
 				data-target="#navbar-main">
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
@@ -14,20 +14,17 @@
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li class="${(controllerName == 'root' ) ? 'active' : ''}"><a
-					href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
 				<sec:ifNotLoggedIn roles="ROLE_USER">
 					<li class="${(controllerName == 'login' ) ? 'active' : ''}"><g:link
-							controller="login" action="auth">
-							<span class="glyphicon glyphicon-user"></span> Login</g:link></li>
+							controller="login" action="auth">Login</g:link></li>
 					<li class="${(controllerName == 'user' ) ? 'active' : ''}"><g:link
 							controller="user" action="create"> Register</g:link></li>
 				</sec:ifNotLoggedIn>
 
 				<sec:ifLoggedIn roles="ROLE_USER">
 					<li class="${(controllerName == 'user' ) ? 'active' : ''}"><g:link
-							uri="/user/show/">
-							<span class="glyphicon glyphicon-cog"></span> My Account</g:link></li>
+							uri="/user/listUrls/">
+							<span class="glyphicon glyphicon-user"></span> My Account</g:link></li>
 					<li><g:link url="/j_spring_security_logout">Logout</g:link></li>
 				</sec:ifLoggedIn>
 			</ul>
