@@ -11,6 +11,8 @@
 
 		<g:render template="/shared/headConfig" />
 		
+		<g:render template="/shared/analytics" />
+
 		<title>
 			<g:layoutTitle default="Shaddy"/>
 		</title>
