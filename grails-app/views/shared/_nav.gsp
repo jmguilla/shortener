@@ -23,7 +23,7 @@
 
 				<sec:ifLoggedIn roles="ROLE_USER">
 					<li class="${(controllerName == 'user' ) ? 'active' : ''}"><g:link
-							uri="/user/listUrls/">
+							controller="user" action="show">
 							<span class="glyphicon glyphicon-user"></span> My Account</g:link></li>
 					<li><g:link url="/j_spring_security_logout">Logout</g:link></li>
 				</sec:ifLoggedIn>

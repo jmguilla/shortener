@@ -35,12 +35,15 @@
 				<div id="paramsNav"
 						class="col-lg-2">
 					<ul class="nav nav-pills nav-stacked">
+					  <li class="${(controllerName == 'user' && actionName == 'show' ) ? 'active' : ''}"><g:link
+							controller="user" action="show">Resume</g:link>
+					  </li>
 					  <li class="${(controllerName == 'user' && actionName == 'listUrls' ) ? 'active' : ''}"><g:link
 							controller="user" action="listUrls">
-							<span class="badge pull-right">xx</span>My urls</g:link>
+							<span class="badge pull-right">{{shaddytems.length}}</span>My urls</g:link>
 					  </li>
-					  <li class="${(controllerName == 'user' && actionName == 'show' ) ? 'active' : ''}"><g:link
-							controller="user" action="show">Settings</g:link></li>
+					  <li class="${(controllerName == 'user' && actionName == 'edit' ) ? 'active' : ''}"><g:link
+							controller="user" action="edit">Settings</g:link></li>
 					</ul>
 				</div>
 				<div class="col-lg-10" >
@@ -48,7 +51,9 @@
 					<g:render template="/shared/alerts"/>
 					
 					<!-- some space in mobile vertical mode -->
-					<br class=".visible-xs .visible-ms .visible-md"/>
+					<div class="hidden-lg">
+						<br/>
+					</div>
 					
 					<g:layoutBody/>
 					

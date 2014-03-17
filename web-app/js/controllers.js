@@ -39,14 +39,16 @@ shortenerControllers.controller("MainCtrl",
 
 shortenerControllers.controller("UserCtrl",
 		function($scope, $modal, User, Alert, $rootScope) {
-	
+			
+			$scope.shaddytems = User.getAllUrls();
+			
 			User.getUser({},
-					function(data, headers){
-						$scope.user = data.user;
-					},
-					function(httpResponse){
-						Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
-					});
+				function(data, headers){
+					$scope.user = data.user;
+				},
+				function(httpResponse){
+					Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
+				});
 			
 			$scope.register = function(email, password){
 				if(email == undefined)

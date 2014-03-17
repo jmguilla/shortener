@@ -17,4 +17,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.js"></script>
 
 <script src="/js/libs/ui-bootstrap-tpls-0.10.0.js"></script>
+
+<script src="/js/app.js"></script>
+<script src="/js/services.js"></script>
+<script src="/js/filters.js"></script>
 <script src="/js/controllers.js"></script>

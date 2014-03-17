@@ -5,7 +5,7 @@ shortenerServices.factory('User', function($resource){
 		getUser: {
 			method: 'GET',
 			params: {
-				actionId: 'retrieveUserAsJson'
+				actionId: 'getUser'
 			},
 			headers: {
   			'Content-Type': 'application/json',
@@ -22,6 +22,18 @@ shortenerServices.factory('User', function($resource){
 	  			'Content-Type': 'application/json',
 	  			'Accept': 'application/json'
 			}
+		},
+		
+		getAllUrls: {
+			method: 'GET',
+			params: {
+				actionId: 'getAllUrls'
+			},
+			headers: {
+	  			'Content-Type': 'application/json',
+	  			'Accept': 'application/json'
+			},
+			isArray:true
 		},
 		
 		register: {
