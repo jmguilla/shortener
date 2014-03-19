@@ -10,6 +10,12 @@
 	top: -0.7em;
 }
 
+/* CUSTOMIZE THE TABLE
+-------------------------------------------------- */
+.table-hover tbody tr:hover > td {
+  cursor: pointer
+}
+
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */

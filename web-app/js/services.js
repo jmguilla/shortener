@@ -24,18 +24,6 @@ shortenerServices.factory('User', function($resource){
 			}
 		},
 		
-		getAllUrls: {
-			method: 'GET',
-			params: {
-				actionId: 'getAllUrls'
-			},
-			headers: {
-	  			'Content-Type': 'application/json',
-	  			'Accept': 'application/json'
-			},
-			isArray:true
-		},
-		
 		register: {
 			method: 'POST',
 			params: {
@@ -46,6 +34,22 @@ shortenerServices.factory('User', function($resource){
 	  			'Accept': 'application/json'
 			}
 		}
+	});
+})
+
+shortenerServices.factory('Shaddytem', function($resource){
+	return $resource('/shaddytem/:actionId', {actionId:'', userId: '@id'}, {
+		getListForUser: {
+			method: 'GET',
+			params: {
+				actionId: 'getListForUser'
+			},
+			headers: {
+  			'Content-Type': 'application/json',
+  			'Accept': 'application/json'
+			},
+			isArray:true
+		},
 	});
 })
 

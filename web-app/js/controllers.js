@@ -38,17 +38,30 @@ shortenerControllers.controller("MainCtrl",
 );
 
 shortenerControllers.controller("UserCtrl",
-		function($scope, $modal, User, Alert, $rootScope) {
+		function($scope, $modal, User, Shaddytem, Alert, $rootScope) {
 			
-			$scope.shaddytems = User.getAllUrls();
 			
 			User.getUser({},
 				function(data, headers){
 					$scope.user = data.user;
+					if($scope.user != null){
+						$scope.shaddytems = Shaddytem.getListForUser({userId:$scope.user.email},
+							function(data, headers){
+								// RAS
+							},
+							function(httpResponse){
+								Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
+							}
+						);
+					}
+					else{
+						Alert.addAlert({type: 'danger', content:'An error occurred while retrieving your url'});
+					}
 				},
 				function(httpResponse){
 					Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
 				});
+			
 			
 			$scope.register = function(email, password){
 				if(email == undefined)

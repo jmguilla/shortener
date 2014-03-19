@@ -33,16 +33,6 @@ class UserController {
    * @return
    */
   @Secured(['IS_AUTHENTICATED_FULLY'])
-  def listUrls(){
-	  String view = 'listUrls'
-	  respond(view: view)
-  }
-  
-  /**
-   * Display view of user urls
-   * @return
-   */
-  @Secured(['IS_AUTHENTICATED_FULLY'])
   def edit(){
 	  String view = 'edit'
 	  respond(view: view)
@@ -64,23 +54,6 @@ class UserController {
 
     result.user = user
     render(result as JSON)
-  }
-  
-  /**
-   * Return all urls of current user as JSON array
-   * @return
-   */
-  def getAllUrls() {
-	  def result = []
-	  for (int i=0; i<10;i++) {
-		Shaddytem item = new Shaddytem();
-		item.id = i;
-		item.shortUrl = "http://sha.dy/" + i;
-		item.longUrl = "http://www.google.com/longUrlVersion" + i;
-		item.numClicks  = 10 * i;
-		result.push(item)
-	  }
-	  render(result as JSON)
   }
   
   @Transactional
