@@ -3,16 +3,13 @@ package com.kott.shortener
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 
-
-
-
-
-
 class MappingController {
 
+  def springSecurityService
   def mappingService
+  def analyticsService
 
-  static allowedMethods = [create:['GET', 'PUT'], retrieve: 'GET']
+  static allowedMethods = [create:['GET', 'PUT'], retrieve: 'GET', getStats: 'GET']
 
   def index() {
   }
@@ -50,8 +47,7 @@ class MappingController {
     withFormat{
       html{
         if(result.mapping){
-          response.sendRedirect(result.mapping.target)
-          response.sendError(500)
+          render view: "redirect", model: [mapping: result.mapping]
         }else{
           response.sendError(result.status, result.message)
         }
@@ -92,7 +88,7 @@ class MappingController {
           message: message(code: 'rest.mapping.create.targetmissing', default: 'Target parameter required')
         ] as JSON)
       }else{
-        Mapping result = new Mapping(target: request.JSON.target)
+        Mapping result = new Mapping(target: request.JSON.target, user: springSecurityService.currentUser)
         if(!result.save(flush: true)){
           render([
             alert: 'danger',
@@ -105,6 +101,27 @@ class MappingController {
             result: g.createLink(absolute: true, uri: '/') + mappingService.getShortId(result)
           ] as JSON)
         }
+      }
+    }
+  }
+  
+  /**
+   * Retrieves the links' statistics for the authenticated user
+   * @return the links' statistics for the authenticated user
+   */
+  @Secured(['IS_AUTHENTICATED_FULLY'])
+  def stats(){
+    Set<Mapping> mappings = mappingService.getUserMappings(springSecurityService.currentUser)
+    def result = [:]
+    if(mappings){
+      result = analyticsService.retrieveStats(springSecurityService.currentUser, mappings)
+    }
+    withFormat{
+      json{
+        render(result as JSON)
+      }
+      '*'{
+        render(result)
       }
     }
   }
