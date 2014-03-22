@@ -11,4 +11,5 @@ class RootController {
   def index() {
     render view: '/index.gsp'
   }
+  
 }

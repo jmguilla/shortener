@@ -13,5 +13,8 @@ class Shaddytem  {
 	String id
 	String shortUrl
 	String longUrl
+	String urlOwnerId
+	
 	int numClicks
+	
 }

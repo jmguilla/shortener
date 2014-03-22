@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="userParams" />
+		<meta name="layout" content="account" />
 		
 		<title>Shaddy - Settings</title>
 		

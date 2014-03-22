@@ -37,26 +37,78 @@ shortenerControllers.controller("MainCtrl",
 		}
 );
 
+shortenerControllers.controller("ShaddytemCtrl",
+		function($scope, Shaddytem, Alert){
+			
+			$scope.currentShaddytem = null;
+			$scope.currentShaddytemStats = null;
+			
+			$scope.initDetailView = function(shaddytemId){
+				$scope.getShaddytem(shaddytemId);
+//				$scope.getShaddytemStats(shaddytemId);
+			}
+			
+			$scope.initListView = function(){
+				$scope.getList();
+			}
+			
+			$scope.showShaddytem = function(id){
+				
+			}
+			
+			/**
+			 * Get all Shaddytem listing for currentUser
+			 */
+			$scope.getList = function(){
+				Shaddytem.getList({},
+					function(data, headers){
+						$scope.shaddytems = data; 
+					},
+					function(httpResponse){
+						Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
+					}
+				);
+			}
+			
+			/**
+			 * Get stats of given Shaddytem
+			 */
+			$scope.getShaddytem = function(id){
+				Shaddytem.getItem({id:id},
+					function(data, headers){
+						$scope.currentShaddytem = data;
+					},
+					function(httpResponse){
+						Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
+					}
+				);
+			}
+			
+			/**
+			 * Get Shaddytem
+			 */
+			$scope.getShaddytem = function(id){
+				Shaddytem.getItem({id:id},
+					function(data, headers){
+						$scope.currentShaddytemStats = data;
+					},
+					function(httpResponse){
+						Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
+					}
+				);
+			}
+		}
+		
+);
+
+
 shortenerControllers.controller("UserCtrl",
-		function($scope, $modal, User, Shaddytem, Alert, $rootScope) {
+		function($scope, $modal, User, Shaddytem, Alert) {
 			
 			
 			User.getUser({},
 				function(data, headers){
 					$scope.user = data.user;
-					if($scope.user != null){
-						$scope.shaddytems = Shaddytem.getListForUser({userId:$scope.user.email},
-							function(data, headers){
-								// RAS
-							},
-							function(httpResponse){
-								Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
-							}
-						);
-					}
-					else{
-						Alert.addAlert({type: 'danger', content:'An error occurred while retrieving your url'});
-					}
 				},
 				function(httpResponse){
 					Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});

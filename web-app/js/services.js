@@ -39,10 +39,10 @@ shortenerServices.factory('User', function($resource){
 
 shortenerServices.factory('Shaddytem', function($resource){
 	return $resource('/shaddytem/:actionId', {actionId:'', userId: '@id'}, {
-		getListForUser: {
+		getList: {
 			method: 'GET',
 			params: {
-				actionId: 'getListForUser'
+				actionId: 'getListForCurrentUser'
 			},
 			headers: {
   			'Content-Type': 'application/json',
@@ -50,6 +50,17 @@ shortenerServices.factory('Shaddytem', function($resource){
 			},
 			isArray:true
 		},
+	
+		getItem:{
+			method: 'GET',
+			params: {
+				actionId: 'getShaddytem'
+			},
+			headers: {
+  			'Content-Type': 'application/json',
+  			'Accept': 'application/json'
+			}
+		}
 	});
 })
 

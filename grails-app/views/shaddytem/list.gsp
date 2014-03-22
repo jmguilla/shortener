@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="userParams" />
+		<meta name="layout" content="account" />
 		
 		<title>Shaddy - urls</title>
 		
@@ -21,7 +21,7 @@
 		  </div>
 		</div>
 		
-		<div class="row">
+		<div class="row" ng-controller="ShaddytemCtrl" ng-init="initListView()">
 			<div class="table-responsive">
 				<table class="table table-hover table-striped">
 					<thead>
@@ -32,11 +32,13 @@
 					    <th>clicks</th>
 					  </tr>
 					</thead>
-					<tr ng-repeat="shaddytem in shaddytems | filter:searchText | orderBy:orderProp">
-	                    <td>{{shaddytem.id}}</td>
+					<tr ng-repeat="shaddytem in shaddytems | filter:searchText | orderBy:orderProp"
+						ng-click="")>
+	                    <td>{{shaddytems.indexOf(shaddytem)}}</td>
 	                    <td>{{shaddytem.shortUrl}}</td>
 	                    <td>{{shaddytem.longUrl}}</td>
 	                    <td>{{shaddytem.numClicks}}</td>
+	                    <td><g:link action="show" id="{{shaddytem.id}}">Details</g:link></td>
 	                </tr>
 				</table>
 			</div>

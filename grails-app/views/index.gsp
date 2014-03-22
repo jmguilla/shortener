@@ -16,50 +16,18 @@
 		
 			<sec:ifNotLoggedIn roles="ROLE_USER">
 				<div class="jumbotron">
-					<div id="myCarousel" class="carousel slide" data-ride="carousel">
-				      <!-- Indicators -->
-				      <ol class="carousel-indicators">
-				        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-				        <li data-target="#myCarousel" data-slide-to="1"></li>
-				        <li data-target="#myCarousel" data-slide-to="2"></li>
-				      </ol>
-				      <div class="carousel-inner">
-				        <div class="item active">
-				          <div class="container">
-				            <div class="carousel-caption">
-				              <h1>Step ONE</h1>
-				              <p>Shorten your url with {{applicationName}} !</p>
-				            </div>
-				          </div>
-				        </div>
-				        <div class="item">
-				          <div class="container">
-				            <div class="carousel-caption">
-				              <h1>Step TWO</h1>
-				              <p>Share your url !</p>
-				            </div>
-				          </div>
-				        </div>
-				        <div class="item">
-				          <div class="container">
-				            <div class="carousel-caption">
-				              <h1>Step THREE</h1>
-				              <p>Ear money for every click on your link !</p>
-				            </div>
-				          </div>
-				        </div>
-				      </div>
-				      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-				      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-				    </div><!-- /.carousel -->
-				    <div class="text-center">
-			    		<p><a class="btn btn-lg btn-success" href="#" role="button">Register</a></p>
-			    	</div>
+					<h1>Make money by sharing!</h1>
+					<p>Share your links on social Networks like Facebook or Twitter using Shaddy and get money from it !</p>
+					<g:link controller="documentation" action="description" class="btn btn-lg btn-success">Check how it works !</g:link>
 		    	</div>
+				
+				<hr/>
 				    
-		    	<div class="text-center">
-					<h2>Already one of us?</h2>
-	    			<g:link controller="login" action="auth" class="btn btn-lg btn-success">Login</g:link>
+		    	<div class="row">
+					<h2 class="col-lg-offset-4 col-lg-3 text-center">Already one of us?</h2>
+					<div class="col-lg-1 text-center">
+	    				<g:link controller="login" action="auth" class="btn btn-lg btn-success">Login</g:link>
+	    			</div>
 	    		</div>
 			</sec:ifNotLoggedIn>
 			<sec:ifLoggedIn roles="ROLE_USER">

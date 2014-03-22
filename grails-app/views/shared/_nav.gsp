@@ -14,6 +14,14 @@
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+          			<a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+			            <li><g:link	controller="documentation" action="description">What is Shaddy?</g:link></li>
+			            <li><g:link	controller="documentation" action="faq">FAQ</g:link></li>
+			            <li><g:link	controller="documentation" action="terms">Terms</g:link></li>
+			        </ul>
+			    </li>
 				<sec:ifNotLoggedIn roles="ROLE_USER">
 					<li class="${(controllerName == 'login' ) ? 'active' : ''}"><g:link
 							controller="login" action="auth">Login</g:link></li>
