@@ -53,6 +53,9 @@ grails.project.dependency.resolution = {
   dependencies {
 
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
+    compile 'com.google.http-client:google-http-client-jackson2:1.17.0-rc'
+
+    compile 'com.google.apis:google-api-services-analytics:v3-rev83-1.17.0-rc'
     runtime 'mysql:mysql-connector-java:5.1.24'
     runtime 'c3p0:c3p0:0.9.1.2'
 

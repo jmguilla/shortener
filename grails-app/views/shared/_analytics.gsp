@@ -8,7 +8,8 @@
   ga('create', 'UA-15228150-7', 'app-shortener.rhcloud.com');
   </g:if>
   <g:else>
-  ga('create', 'UA-15228150-7', { 'cookieDomain': 'none' });
+  <!-- ga('create', 'UA-15228150-7',  {'cookieDomain': 'none'}); -->
+  ga('create', 'UA-15228150-7', 'app-shortener.rhcloud.com');
   </g:else>
   ga('send', 'pageview');
 </script>

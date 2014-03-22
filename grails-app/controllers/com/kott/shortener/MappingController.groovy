@@ -114,7 +114,7 @@ class MappingController {
     Set<Mapping> mappings = mappingService.getUserMappings(springSecurityService.currentUser)
     def result = [:]
     if(mappings){
-      result = analyticsService.retrieveStats(mappings)
+      result = analyticsService.retrieveStats(springSecurityService.currentUser, mappings)
     }
     withFormat{
       json{

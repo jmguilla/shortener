@@ -10,7 +10,7 @@
 // if (System.properties["${appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
-
+grails.app.name = "shortener"
 grails.app.context = "/"
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 
@@ -180,7 +180,6 @@ environments {
   }
 }
 
-
 if(!System.getenv("APP_MAIL_USER") || !System.getenv("APP_MAIL_PWD")){
   println "/!\\ set APP_MAIL_USER & APP_MAIL_PWD if you want email to work /!\\"
 }
@@ -197,3 +196,12 @@ grails{
       "mail.smtp.socketFactory.fallback":"false"]
   }
 }
+
+
+// Config for google analytics integration
+if(!System.getenv("google-privatekey.base64")){
+  throw new IllegalStateException('google-privatekey.base64 env property is missing')
+}
+//TODO defined but not used... Problem in AnalyticsService at initializing time
+google.analytics.accountId = "1051867773103-ujcp2cs6gok2jopa9iop3uetav918a68@developer.gserviceaccount.com"
+google.analytics.statsProfileId = "ga:83491938"
