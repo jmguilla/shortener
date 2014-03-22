@@ -36,4 +36,13 @@ class MappingService {
     Long id = new BigInteger(Base64.decodeBase64(shortId)).toLong()
     return Mapping.get(id)
   }
+  
+  /**
+   * Retrieves the {@link Mapping} of the currently authenticated user
+   * @return
+   */
+  @Transactional(readOnly = true)
+  def Set<Mapping> getUserMappings(User user){
+    return user.mappings
+  }
 }

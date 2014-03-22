@@ -11,6 +11,8 @@ class User {
   boolean accountExpired
   boolean accountLocked
   boolean passwordExpired
+  
+  static hasMany = [mappings: Mapping]
 
   static transients = ['springSecurityService']
 
