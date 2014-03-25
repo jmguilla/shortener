@@ -118,7 +118,7 @@ class MappingController {
     }
     withFormat{
       json{
-        render(result as JSON)
+        render([alert: 'success', message: message(code: 'rest.mapping.statistics.retrieved', default: 'Mappings statistics retrieved successfully'), result: result] as JSON)
       }
       '*'{
         render(result)
