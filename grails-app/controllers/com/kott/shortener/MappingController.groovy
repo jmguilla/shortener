@@ -47,7 +47,11 @@ class MappingController {
     withFormat{
       html{
         if(result.mapping){
-          render view: "redirect", model: [mapping: result.mapping]
+          if(!request.xhr){
+            render view: "redirect", model: [mapping: result.mapping]
+          }else{
+            response.sendRedirect(result.mapping.target)
+          }
         }else{
           response.sendError(result.status, result.message)
         }
