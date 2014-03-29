@@ -1,30 +1,33 @@
 package com.kott.shortener
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.security.KeyStore;
-import java.security.PrivateKey;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.Base64;
-import com.google.api.services.analytics.Analytics;
-import com.google.api.services.analytics.AnalyticsScopes;
-import com.google.api.services.analytics.Analytics.Data.Ga.Get;
-
 import grails.transaction.Transactional
 
+import java.security.KeyStore
+import java.security.PrivateKey
+
+import com.google.api.client.auth.oauth2.Credential
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
+import com.google.api.client.http.HttpTransport
+import com.google.api.client.http.javanet.NetHttpTransport
+import com.google.api.client.json.JsonFactory
+import com.google.api.client.json.jackson2.JacksonFactory
+import com.google.api.client.util.Base64
+import com.google.api.services.analytics.Analytics
+import com.google.api.services.analytics.AnalyticsScopes
+import com.google.api.services.analytics.Analytics.Data.Ga.Get
+
+/**
+ * This is the service to interact with google analytics stuffs
+ * @author jmguilla
+ *
+ */
 @Transactional(readOnly = true)
 class AnalyticsService {
-  
+
+  // for holding the configuration
   def grailsApplication
+  // for interacting with mappings
   def mappingService
 
   def HttpTransport HTTP_TRANSPORT = new NetHttpTransport()
@@ -59,25 +62,25 @@ class AnalyticsService {
    * 
    * @return empty object if parameter is null or empty, data formatted <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/reference#output">as a dataTable</a> otherwise.
    */
-  def retrieveStats(User user, Set<Mapping> mappings) {
-    if(!mappings){
-      return [:]
-    }
+  def retrieveStats(User user = null, Set<Mapping> mappings = new HashSet<Mapping>()) {
     Get get = client.data().ga().get(grailsApplication.config.google.analytics.statsProfileId , "2005-01-01", "today", "ga:visits");
     get.setDimensions("ga:pagePath");
     get.setMetrics("ga:pageviews");
     get.setSort("-ga:pageviews");
-    get.setQuotaUser(user.id as String);
+    if(user){
+      get.setQuotaUser(user.id as String);
+    }
     get.setOutput("dataTable");
     def pagePathFilter = ""
-    for(int i = 0; i < mappings.size(); i++){
-      pagePathFilter += "ga:pagePath==/" + mappingService.getShortId(mappings[i])
-      if(i < mappings.size() - 1){
-        pagePathFilter += ","
+    if(mappings){
+      for(int i = 0; i < mappings.size(); i++){
+        pagePathFilter += "ga:pagePath==/" + mappingService.getShortId(mappings[i])
+        if(i < mappings.size() - 1){
+          pagePathFilter += ","
+        }
       }
+      get.setFilters(pagePathFilter)
     }
-    get.setFilters(pagePathFilter)
-
     get.execute()
   }
 }

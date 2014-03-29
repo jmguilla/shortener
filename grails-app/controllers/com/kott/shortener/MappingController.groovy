@@ -2,6 +2,9 @@ package com.kott.shortener
 
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional;
+
+import com.kott.shortener.remuneration.PercentageSimple
 
 class MappingController {
 
@@ -27,9 +30,7 @@ class MappingController {
    * </ul
    * 
    */
-  @Secured([
-    'IS_AUTHENTICATED_ANONYMOUSLY'
-  ])
+  @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
   def retrieve() {
     def result = [status: 200]
     if(!params.shortId){
@@ -78,9 +79,7 @@ class MappingController {
    * GET: Renders the create view
    * 
    */
-  @Secured([
-    'IS_AUTHENTICATED_ANONYMOUSLY'
-  ])
+  @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
   def create() {
     if('get'.equalsIgnoreCase(request.method)){
       render view: 'create'
@@ -108,7 +107,7 @@ class MappingController {
       }
     }
   }
-  
+
   /**
    * Retrieves the links' statistics for the authenticated user
    * @return the links' statistics for the authenticated user
@@ -124,9 +123,14 @@ class MappingController {
       json{
         render([alert: 'success', message: message(code: 'rest.mapping.statistics.retrieved', default: 'Mappings statistics retrieved successfully'), result: result] as JSON)
       }
-      '*'{
-        render(result)
-      }
+      '*'{ render(result) }
     }
+  }
+
+  @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+  @Transactional
+  def remuneration(){
+    PercentageSimple remunerationAlgorith = new PercentageSimple()
+    render (remunerationAlgorith.computeRemuneration(analyticsService, 1000, User.list()) as JSON)
   }
 }
