@@ -70,10 +70,12 @@ class MappingController {
     }
     withFormat{
 	  json{
+		  if(result.mapping){
+			  def jsonMapping = result.mapping.jsonReady();
+			  jsonMapping.shortUrl = g.createLink(absolute: true, uri: '/') + result.mapping.shortId;
+			  result.mapping = jsonMapping;
+		  }
 		  response.status = result.status;
-		  def jsonMapping = result.mapping.jsonReady();
-		  jsonMapping.shortUrl = g.createLink(absolute: true, uri: '/') + mappingService.getShortId(result.mapping);
-		  result.mapping = jsonMapping;
 		  render(result as JSON);
 	  }
 	  html{
@@ -112,8 +114,9 @@ class MappingController {
 		// create a new list for json result in order to keep transient values
 		List jsonMappings = [];
 		for (mapping in mappings){
+			if(!mapping) continue;
 			def jsonMapping=mapping.jsonReady();
-			jsonMapping.shortUrl = g.createLink(absolute: true, uri: '/') + mappingService.getShortId(mapping); 
+			jsonMapping.shortUrl = g.createLink(absolute: true, uri: '/') + mapping.shortId; 
 			jsonMappings.push(jsonMapping);
 		}
 		response.status = result.status;
@@ -161,7 +164,7 @@ class MappingController {
           render([
             alert: 'success',
             message: message(code: 'rest.mapping.create.success', default: 'Mapping created'),
-            result: g.createLink(absolute: true, uri: '/') + mappingService.getShortId(result)
+            result: g.createLink(absolute: true, uri: '/') + result.shortId
           ] as JSON)
         }
       }

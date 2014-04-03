@@ -36,7 +36,7 @@
 					<tr ng-repeat="mapping in mappings | filter:searchText | orderBy:orderProp"
 						ng-click="")>
 	                    <td>{{mapping.id}}</td>
-	                    <td>{{mapping.shortId}}</td>
+	                    <td>{{mapping.shortUrl}}</td>
 	                    <td>{{mapping.target}}</td>
 	                    <td>{{mapping.description}}</td>
 	                    <td>{{mapping.numClicks}}TODO</td>
