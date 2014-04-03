@@ -18,6 +18,29 @@ class MappingController {
   }
 
   /**
+   * Display user mappings list
+   * @return
+   */
+  @Secured(['IS_AUTHENTICATED_FULLY'])
+  def list() {
+	  String view = 'list'
+	  respond(view: view)
+  }
+  
+  /**
+   * Displays mapping
+   * @return
+   */
+  @Secured(['IS_AUTHENTICATED_FULLY'])
+  def show() {
+	  String id = params.id
+	  
+	  String view = 'show'
+	  
+	  render view: view, model: [shortId: id]
+  }
+  
+  /**
    * Retrieves a {@link Mapping} from a shortId passed as an entry of params map.
    * See {@link UrlMappings} for the custom mapping. This method is <bold>format</bold> aware:
    * <ul>
@@ -46,22 +69,58 @@ class MappingController {
       }
     }
     withFormat{
-      html{
-        if(result.mapping){
-          if(!request.xhr){
-            render view: "redirect", model: [mapping: result.mapping]
-          }else{
-            response.sendRedirect(result.mapping.target)
-          }
-        }else{
-          response.sendError(result.status, result.message)
-        }
-      }
-      json{
-        response.status = result.status
-        render(result as JSON)
-      }
+	  json{
+		  response.status = result.status;
+		  def jsonMapping = result.mapping.jsonReady();
+		  jsonMapping.shortUrl = g.createLink(absolute: true, uri: '/') + mappingService.getShortId(result.mapping);
+		  result.mapping = jsonMapping;
+		  render(result as JSON);
+	  }
+	  html{
+	    if(result.mapping){
+	      if(!request.xhr){
+	        render view: "redirect", model: [mapping: result.mapping]
+	      }else{
+	        response.sendRedirect(result.mapping.target)
+	      }
+	    }else{
+	      response.sendError(result.status, result.message)
+	    }
+	  }
     }
+  }
+  
+  /**
+   * Retrieves all mappings of current user
+   * JSON: renders the appropriate object as JSON if it exists, otherwise, response.status == 404.
+   *
+   */
+  @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+  def retrieveAll() {
+	def result = [status: 200]
+	Set<Mapping> mappings = mappingService.getUserMappings(springSecurityService.currentUser);
+	
+	result.mappings = mappings; 
+	
+	if(!result.mappings){
+		result.status = 404
+		result.alert = 'danger'
+		result.message = message(code: 'rest.mappings.notfound', default: "No mappings for current user", args: [])
+	}
+	withFormat{
+	  json{
+		// create a new list for json result in order to keep transient values
+		List jsonMappings = [];
+		for (mapping in mappings){
+			def jsonMapping=mapping.jsonReady();
+			jsonMapping.shortUrl = g.createLink(absolute: true, uri: '/') + mappingService.getShortId(mapping); 
+			jsonMappings.push(jsonMapping);
+		}
+		response.status = result.status;
+		result.mappings = jsonMappings;
+		render(result as JSON)
+	  }
+	}
   }
 
   /**
@@ -93,10 +152,11 @@ class MappingController {
       }else{
         Mapping result = new Mapping(target: request.JSON.target, user: springSecurityService.currentUser)
         if(!result.save(flush: true)){
-          render([
+        	response.status = 400
+			
+			render([
             alert: 'danger',
-            message: message(code: 'rest.mapping.create.failure', default: 'Mapping created', args: [result.errors as String])
-          ] as JSON)
+            message: message(code: 'rest.mapping.create.failure', default: 'Url is not valid.', args: [/*result.errors as String*/'Url is not valid'])] as JSON)
         }else{
           render([
             alert: 'success',

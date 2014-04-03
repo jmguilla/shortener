@@ -4,6 +4,7 @@ var shortener = angular.module("shortener", [
     "shortenerControllers",
     "shortenerServices", 
     "shortenerFilters", 
+    "shortenerDirectives",
     "ui.bootstrap"
 ]);
 

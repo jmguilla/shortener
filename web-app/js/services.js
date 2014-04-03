@@ -37,33 +37,6 @@ shortenerServices.factory('User', function($resource){
 	});
 })
 
-shortenerServices.factory('Shaddytem', function($resource){
-	return $resource('/shaddytem/:actionId', {actionId:'', userId: '@id'}, {
-		getList: {
-			method: 'GET',
-			params: {
-				actionId: 'getListForCurrentUser'
-			},
-			headers: {
-  			'Content-Type': 'application/json',
-  			'Accept': 'application/json'
-			},
-			isArray:true
-		},
-	
-		getItem:{
-			method: 'GET',
-			params: {
-				actionId: 'getShaddytem'
-			},
-			headers: {
-  			'Content-Type': 'application/json',
-  			'Accept': 'application/json'
-			}
-		}
-	});
-})
-
 shortenerServices.factory('Alert', function($rootScope, $timeout){
 	return {
 	    addAlert: function(alert, timeout) {
@@ -81,11 +54,15 @@ shortenerServices.factory('Alert', function($rootScope, $timeout){
 	
 		overrideDisplay: function(value) {
 			$rootScope.alertTopDisplay = value;
-		}
+		},
+	     
+	    clear: function() {
+	    	$rootScope.alerts = [];
+	    }
 	  };
 })
 
-shortenerServices.factory('Shortener', function($resource){
+shortenerServices.factory('Mapping', function($resource){
 	return $resource('/mapping/:actionId', {actionId:'', userID:'@id'}, {
 		getShortenedUrl: {
 			method: 'PUT',
@@ -97,5 +74,49 @@ shortenerServices.factory('Shortener', function($resource){
   			'Accept': 'application/json'
 			}
 		},
+		
+		retrieve: {
+			method: 'GET',
+			params: {
+				actionId: 'retrieve'
+			},
+			headers: {
+  			'Content-Type': 'application/json',
+  			'Accept': 'application/json'
+			}
+		},
+		
+		retrieveAll: {
+			method: 'GET',
+			params: {
+				actionId: 'retrieveAll'
+			},
+			headers: {
+  			'Content-Type': 'application/json',
+  			'Accept': 'application/json'
+			}
+		},
+		
+		getAllStats: {
+			method: 'GET',
+			params: {
+				actionId: 'stats'
+			},
+			headers: {
+  			'Content-Type': 'application/json',
+  			'Accept': 'application/json'
+			}
+		},
+		
+		getAllRetribution: {
+			method: 'GET',
+			params: {
+				actionId: 'remuneration'
+			},
+			headers: {
+  			'Content-Type': 'application/json',
+  			'Accept': 'application/json'
+			}
+		}
 	});
 })

@@ -1,8 +1,16 @@
-//Main controller
+
+// load google charts api
+google.load('visualization', '1', {packages:['corechart']});
+//google.setOnLoadCallback(function() {
+//	  angular.bootstrap(document.body, ['shortener']);
+//	});
+
+
 var shortenerControllers = angular.module("shortenerControllers", []);
 
+//Main controller
 shortenerControllers.controller("MainCtrl",
-		function($scope, $rootScope, Shortener, Alert) {
+		function($scope, $rootScope, Mapping, Alert) {
 			
 			$rootScope.applicationName = "Shaddy";
 			// store alerts in a single place, the $rootScope, accessed by service Alert
@@ -12,15 +20,25 @@ shortenerControllers.controller("MainCtrl",
 			$scope.isCollapsed = true;
 			$scope.currentShortUrl = "";
 			
+//			Mapping.getAllRetribution({},
+//					function(data, headers){
+//		                $scope.globalRetribution = data;
+//					},
+//					function(httpResponse){
+//						Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
+//					});
+				
+			
 			$scope.shortenUrl = function(longUrl){
+				Alert.clear();
 				if($scope.longUrlText != null && $scope.longUrlText != undefined && $scope.longUrlText != ""){
-					Shortener.getShortenedUrl({target: $scope.longUrlText},
+					Mapping.getShortenedUrl({target: $scope.longUrlText},
 						function(data, headers){
 							$scope.currentShortUrl = data.result;
 							$scope.isCollapsed = false;
 						},
 						function(httpResponse){
-							Alert.addAlert({type: httpResponse.data.alert, content:msg + httpResponse.data.message});
+							Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message}, 0);
 						}
 					);
 				}
@@ -37,32 +55,43 @@ shortenerControllers.controller("MainCtrl",
 		}
 );
 
-shortenerControllers.controller("ShaddytemCtrl",
-		function($scope, Shaddytem, Alert){
+shortenerControllers.controller("MappingCtrl",
+		function($scope, Mapping, Alert){
 			
-			$scope.currentShaddytem = null;
-			$scope.currentShaddytemStats = null;
+			$scope.currentMapping = null;
+			$scope.currentMappingStats = null;
 			
-			$scope.initDetailView = function(shaddytemId){
-				$scope.getShaddytem(shaddytemId);
-//				$scope.getShaddytemStats(shaddytemId);
+			$scope.initDetailView = function(shortId){
+				$scope.retrieveMapping(shortId);
+				
+				// mocked chart data 
+				var data = google.visualization.arrayToDataTable([
+                  ['Year', 'Clicks', 'Earning'],
+                  ['2004', 10210, 400],
+                  ['2005', 5150, 460],
+                  ['2006', 21, 1120],
+                  ['2007', 51051, 540]
+                ]);
+                var options = {
+                  title: 'Url stats'
+                };
+                var chart = {};
+                chart.data = data;
+                chart.options = options;
+                $scope.chart = chart;
 			}
 			
 			$scope.initListView = function(){
 				$scope.getList();
 			}
 			
-			$scope.showShaddytem = function(id){
-				
-			}
-			
 			/**
-			 * Get all Shaddytem listing for currentUser
+			 * Get all mappings of current user
 			 */
 			$scope.getList = function(){
-				Shaddytem.getList({},
+				Mapping.retrieveAll({},
 					function(data, headers){
-						$scope.shaddytems = data; 
+						$scope.mappings = data.mappings; 
 					},
 					function(httpResponse){
 						Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
@@ -71,12 +100,12 @@ shortenerControllers.controller("ShaddytemCtrl",
 			}
 			
 			/**
-			 * Get stats of given Shaddytem
+			 * Retrieve Mapping for given ShortId
 			 */
-			$scope.getShaddytem = function(id){
-				Shaddytem.getItem({id:id},
+			$scope.retrieveMapping = function(shortId){
+				Mapping.retrieve({shortId:shortId},
 					function(data, headers){
-						$scope.currentShaddytem = data;
+						$scope.currentMapping = data.mapping;
 					},
 					function(httpResponse){
 						Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
@@ -84,37 +113,46 @@ shortenerControllers.controller("ShaddytemCtrl",
 				);
 			}
 			
-			/**
-			 * Get Shaddytem
-			 */
-			$scope.getShaddytem = function(id){
-				Shaddytem.getItem({id:id},
-					function(data, headers){
-						$scope.currentShaddytemStats = data;
-					},
-					function(httpResponse){
-						Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
-					}
-				);
-			}
 		}
 		
 );
 
 
 shortenerControllers.controller("UserCtrl",
-		function($scope, $modal, User, Shaddytem, Alert) {
+		function($scope, $modal, User, Mapping, Alert, Mapping) {
 			
 			
-			User.getUser({},
-				function(data, headers){
-					$scope.user = data.user;
-				},
-				function(httpResponse){
-					Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
-				});
+//			Mapping.getAllStats({},
+//				function(data, headers){
+//	                var chart = data;
+//	                $scope.chart = chart;
+//				},
+//				function(httpResponse){
+//					console.log('problem get all stats');
+//					Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
+//				});
 			
-			
+			$scope.initUserEditView = function(){
+				$scope.getUser();
+			}
+	
+			$scope.initUserView = function(){
+				$scope.getUser();
+			}
+	
+			/**
+			 * Get user and inject in scope
+			 */
+			$scope.getUser = function(){
+				User.getUser({},
+					function(data, headers){
+						$scope.user = data.user;
+					},
+					function(httpResponse){
+						Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
+					});
+			}
+	
 			$scope.register = function(email, password){
 				if(email == undefined)
 					email = null;
@@ -132,7 +170,6 @@ shortenerControllers.controller("UserCtrl",
 			}
 			
 			$scope.updatePWD = function(current, newPWD, newPWDAgain){
-				console.log("upd");
 				User.updatePWD({current:current, newPWD:newPWD, newPWDAgain:newPWDAgain},
 					function(data, headers){
 						// reset fields

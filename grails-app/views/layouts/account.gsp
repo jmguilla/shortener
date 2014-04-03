@@ -38,8 +38,8 @@
 					  <li class="${(controllerName == 'user' && actionName == 'show' ) ? 'active' : ''}"><g:link
 							controller="user" action="show">Resume</g:link>
 					  </li>
-					  <li class="${(controllerName == 'shaddytem' && actionName == 'list' ) ? 'active' : ''}"><g:link
-							controller="shaddytem" action="list">
+					  <li class="${(controllerName == 'mapping' && actionName == 'list' ) ? 'active' : ''}"><g:link
+							controller="mapping" action="list">
 							<span class="badge pull-right">{{shaddytems.length}}</span>My urls</g:link>
 					  </li>
 					  <li class="${(controllerName == 'user' && actionName == 'edit' ) ? 'active' : ''}"><g:link

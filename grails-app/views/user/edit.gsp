@@ -9,7 +9,7 @@
 	
 	</head>
 	<body >
-		<form class="form-horizontal" ng-controller="UserCtrl">
+		<form class="form-horizontal" ng-controller="UserCtrl" ng-init="initUserEditView()">
 			
 			<!-- PASSWORD -->
 			<div class="well">
