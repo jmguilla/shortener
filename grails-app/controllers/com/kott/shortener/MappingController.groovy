@@ -2,7 +2,7 @@ package com.kott.shortener
 
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
-import grails.transaction.Transactional;
+import grails.transaction.Transactional
 
 import com.kott.shortener.remuneration.PercentageSimple
 
@@ -30,7 +30,9 @@ class MappingController {
    * </ul
    * 
    */
-  @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+  @Secured([
+    'IS_AUTHENTICATED_ANONYMOUSLY'
+  ])
   def retrieve() {
     def result = [status: 200]
     if(!params.shortId){
@@ -79,13 +81,15 @@ class MappingController {
    * GET: Renders the create view
    * 
    */
-  @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+  @Secured([
+    'IS_AUTHENTICATED_ANONYMOUSLY'
+  ])
   def create() {
     if('get'.equalsIgnoreCase(request.method)){
       render view: 'create'
     }else if('put'.equalsIgnoreCase(request.method)){
+      response.status = 400
       if(!request.JSON.target){
-        response.status = 400
         render([
           alert: 'danger',
           message: message(code: 'rest.mapping.create.targetmissing', default: 'Target parameter required')
@@ -98,10 +102,11 @@ class MappingController {
             message: message(code: 'rest.mapping.create.failure', default: 'Mapping created', args: [result.errors as String])
           ] as JSON)
         }else{
+          response.status = 200
           render([
             alert: 'success',
             message: message(code: 'rest.mapping.create.success', default: 'Mapping created'),
-            result: g.createLink(absolute: true, uri: '/') + mappingService.getShortId(result)
+            result: g.createLink(absolute: true, uri: '/') + result.shortId
           ] as JSON)
         }
       }
@@ -127,7 +132,9 @@ class MappingController {
     }
   }
 
-  @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+  @Secured([
+    'IS_AUTHENTICATED_ANONYMOUSLY'
+  ])
   @Transactional
   def remuneration(){
     PercentageSimple remunerationAlgorith = new PercentageSimple()
