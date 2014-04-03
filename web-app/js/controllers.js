@@ -20,7 +20,7 @@ shortenerControllers.controller("MainCtrl",
 							$scope.isCollapsed = false;
 						},
 						function(httpResponse){
-							Alert.addAlert({type: httpResponse.data.alert, content: httpResponse.data.message});
+							Alert.addAlert({type: httpResponse.data.alert, content:msg + httpResponse.data.message});
 						}
 					);
 				}

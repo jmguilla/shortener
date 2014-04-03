@@ -8,6 +8,7 @@ class Mapping {
 
   def String target
 
+
   def String shortId
 
   static transients = ["shortId"]
