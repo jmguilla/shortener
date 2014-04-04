@@ -13,16 +13,16 @@
 			<div class="col-lg-10">
 				<div class="panel panel-default"
 					 ng-show="currentMapping != null">
-					<div class="panel-heading">{{currentMapping.id}}</div>
+					<div class="panel-heading">{{currentMapping.shortUrl}}</div>
 					
 					<div class="panel-body">
 				    	<div>
 				    		<a href="{{currentMapping.target}}">{{currentMapping.target}}</a>
 				    	</div>
 						<div class="well">{{currentMapping.description}}</div>
-				    	<div>shortUrl edit TODO: {{currentMapping.shortUrl}}</div>
+				    	<div>shortUrl edit TODO:</div>
 				    	<div>{{currentMapping.numClicks}} clicks TODO</div>
-				    	<div>Created {{currentMapping.creationDate}} TODO</div>
+				    	<div>Creation Date {{currentMapping.creationDate}} TODO</div>
 				    	
 				    	<hr/>
 				    	
@@ -30,7 +30,9 @@
 				    		<div id="statsFilters">
 				    			filters
 				    		</div>
-				    		<div id="statsChart" g-chart>
+				    		Dumb data for test
+				    		<div id="statsChart" sdy-chart>
+				    			
 				    		</div>
 				    		
 				    	</div>

@@ -29,14 +29,6 @@ class Mapping {
     }
   }
   
-  /**
-   * Create JSON version of current object with only necessary values
-   * @return
-   */
-  def jsonReady() {
-	  return ["id" : this.id, "target" : this.target, "description" : this.description, "shortId" : this.shortId]
-  }
-  
   def afterInsert(){
     computeShortId()
   }

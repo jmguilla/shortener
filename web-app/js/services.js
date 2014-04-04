@@ -40,7 +40,15 @@ shortenerServices.factory('User', function($resource){
 shortenerServices.factory('Alert', function($rootScope, $timeout){
 	return {
 	    addAlert: function(alert, timeout) {
-	    	if(timeout == undefined || timeout == null){
+	    	// verify alert coherence
+	    	if(!alert.type){
+	    		alert.type="danger"
+	    	}
+	    	if(!alert.content){
+	    		alert.content="An error occured."
+	    	}
+	    	
+	    	if(!timeout){
 	    		timeout = 3000;
 	    	}
 	    	$rootScope.alerts.push(alert);
@@ -64,7 +72,7 @@ shortenerServices.factory('Alert', function($rootScope, $timeout){
 
 shortenerServices.factory('Mapping', function($resource){
 	return $resource('/mapping/:actionId', {actionId:'', userID:'@id'}, {
-		getShortenedUrl: {
+		create: {
 			method: 'PUT',
 			params: {
 				actionId: 'create'

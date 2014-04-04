@@ -18,7 +18,7 @@ shortenerControllers.controller("MainCtrl",
 			$rootScope.alertTopDisplay = true;
 			
 			$scope.isCollapsed = true;
-			$scope.currentShortUrl = "";
+			$scope.currentMapping = null;
 			
 //			Mapping.getAllRetribution({},
 //					function(data, headers){
@@ -29,13 +29,23 @@ shortenerControllers.controller("MainCtrl",
 //					});
 				
 			
+		}
+);
+
+shortenerControllers.controller("MappingCtrl",
+		function($scope, Mapping, Alert){
+			
+			$scope.currentMapping = null;
+			$scope.currentMappingStats = null;
+			
 			$scope.shortenUrl = function(longUrl){
 				Alert.clear();
 				if($scope.longUrlText != null && $scope.longUrlText != undefined && $scope.longUrlText != ""){
-					Mapping.getShortenedUrl({target: $scope.longUrlText},
+					Mapping.create({target: $scope.longUrlText},
 						function(data, headers){
-							$scope.currentShortUrl = data.result;
+							$scope.currentMapping = data.result;
 							$scope.isCollapsed = false;
+							
 						},
 						function(httpResponse){
 							Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message}, 0);
@@ -48,18 +58,9 @@ shortenerControllers.controller("MainCtrl",
 			}
 			
 			$scope.clearResult = function(){
-				$scope.currentShortUrl = '';
+				$scope.currentMapping = null;
 				$scope.longUrlText = '';
 			}
-			
-		}
-);
-
-shortenerControllers.controller("MappingCtrl",
-		function($scope, Mapping, Alert){
-			
-			$scope.currentMapping = null;
-			$scope.currentMappingStats = null;
 			
 			$scope.initDetailView = function(shortId){
 				$scope.retrieveMapping(shortId);

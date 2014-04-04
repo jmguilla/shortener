@@ -4,6 +4,7 @@ import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional;
 
+import com.kott.shortener.json.JSONMapping;
 import com.kott.shortener.remuneration.PercentageSimple
 
 class MappingController {
@@ -71,7 +72,7 @@ class MappingController {
     withFormat{
 	  json{
 		  if(result.mapping){
-			  def jsonMapping = result.mapping.jsonReady();
+			  def jsonMapping = JSONMapping.cloneMapping(result.mapping);
 			  jsonMapping.shortUrl = g.createLink(absolute: true, uri: '/') + result.mapping.shortId;
 			  result.mapping = jsonMapping;
 		  }
@@ -115,7 +116,7 @@ class MappingController {
 		List jsonMappings = [];
 		for (mapping in mappings){
 			if(!mapping) continue;
-			def jsonMapping=mapping.jsonReady();
+			def jsonMapping=JSONMapping.cloneMapping(mapping);
 			jsonMapping.shortUrl = g.createLink(absolute: true, uri: '/') + mapping.shortId; 
 			jsonMappings.push(jsonMapping);
 		}
@@ -131,7 +132,7 @@ class MappingController {
    * <ul>
    *   <li>alert: matching a value of <a href="http://getbootstrap.com/components/#alerts">http://getbootstrap.com/components/#alerts</a><li>
    *   <li>message: to describe what happened</a><li>
-   *   <li>result: only in case of alert == 'success', the url of the newly created {@link Mappin}</li>
+   *   <li>result: only in case of alert == 'success', the new mapping created as JSON object with additional shortUrl property
    * </ul>
    * params:
    * <ul>
@@ -161,10 +162,13 @@ class MappingController {
             alert: 'danger',
             message: message(code: 'rest.mapping.create.failure', default: 'Url is not valid.', args: [/*result.errors as String*/'Url is not valid'])] as JSON)
         }else{
+			def jsonMapping=JSONMapping.cloneMapping(result);
+			jsonMapping.shortUrl = g.createLink(absolute: true, uri: '/') + result.shortId;
+			
           render([
             alert: 'success',
             message: message(code: 'rest.mapping.create.success', default: 'Mapping created'),
-            result: g.createLink(absolute: true, uri: '/') + result.shortId
+            result: jsonMapping
           ] as JSON)
         }
       }

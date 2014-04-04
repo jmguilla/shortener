@@ -134,3 +134,11 @@
   margin: 0;
   background-color: #00a;
 }
+
+/* Custom display */
+.vCenterRow {
+	float:none;
+    display:inline-block;
+    vertical-align:middle;
+}
+

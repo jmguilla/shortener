@@ -4,6 +4,9 @@
 <!-- bootstrap api -->
 <script src="/js/libs/bootstrap.min.js"></script>
 
+<!-- twitter share button -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
 <!-- css -->
 <link rel="stylesheet" href="/css/libs/bootstrap.min.css">
 <link rel="stylesheet" href="/css/main.css">
