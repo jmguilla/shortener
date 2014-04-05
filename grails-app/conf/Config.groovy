@@ -118,7 +118,7 @@ environments {
   }
   production {
     grails.logging.jul.usebridge = false
-    grails.serverURL = "http://www.changeme.com"
+    grails.serverURL = "http://app-shortener.rhcloud.com"
   }
 }
 
@@ -154,7 +154,7 @@ grails.plugin.springsecurity.facebook.appId='697131890310012'
 if(!System.getenv("FB_APP_SECRET")){
   throw new IllegalStateException("Please set FB_APP_SECRET environment variable.")
 }
-grails.plugin.springsecurity.facebook.secret=System.getenv("FP_APP_SECRET")
+grails.plugin.springsecurity.facebook.secret=System.getenv("FB_APP_SECRET")
 grails.plugin.springsecurity.securityConfigType = "Annotation"
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   '/':                              ['permitAll'],
@@ -164,10 +164,13 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   '/dbconsole/*':                   ['permitAll'],
   '/logout/index':					        ['permitAll'],
   '/emailConfirmation/*':           ['permitAll'],
+  '/fb/*':                          ['permitAll'],
   '/**/js/**':                      ['permitAll'],
   '/**/css/**':                     ['permitAll'],
   '/**/images/**':                  ['permitAll'],
-  '/**/favicon.ico':                ['permitAll']]
+  '/**/favicon.ico':                ['permitAll'],
+  
+  ]
 
 grails.plugin.springsecurity.roleHierarchy = '''
    ROLE_ADMIN > ROLE_USER
@@ -205,3 +208,6 @@ if(!System.getenv("google-privatekey.base64")){
 //TODO defined but not used... Problem in AnalyticsService at initializing time
 google.analytics.accountId = "1051867773103-ujcp2cs6gok2jopa9iop3uetav918a68@developer.gserviceaccount.com"
 google.analytics.statsProfileId = "ga:83491938"
+
+grails.plugin.springsecurity.facebook.filter.processUrl = '/fb/j_spring_security_facebook_check'
+grails.plugin.springsecurity.facebook.filter.redirect.redirectFromUrl = '/fb/j_spring_security_facebook_redirect'
