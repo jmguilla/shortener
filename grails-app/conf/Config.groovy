@@ -154,7 +154,7 @@ grails.plugin.springsecurity.facebook.appId='697131890310012'
 if(!System.getenv("FB_APP_SECRET")){
   throw new IllegalStateException("Please set FB_APP_SECRET environment variable.")
 }
-grails.plugin.springsecurity.facebook.secret=System.getenv("FP_APP_SECRET")
+grails.plugin.springsecurity.facebook.secret=System.getenv("FB_APP_SECRET")
 grails.plugin.springsecurity.securityConfigType = "Annotation"
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   '/':                              ['permitAll'],
