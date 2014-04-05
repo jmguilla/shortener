@@ -1,6 +1,8 @@
+import grails.util.Environment
+
 import org.codehaus.groovy.grails.web.json.JSONObject
 
-import com.kott.shortener.Mapping;
+import com.kott.shortener.Mapping
 import com.kott.shortener.Role
 import com.kott.shortener.User
 import com.kott.shortener.UserRole
@@ -22,6 +24,7 @@ class BootStrap {
 	def adminRole = Role.findByAuthority('ROLE_ADMIN_2') ?: new Role(authority: 'ROLE_ADMIN_2').save(failOnError: true)
 	
 	//add an admin and default user
+  if(Environment.current == Environment.DEVELOPMENT){
 	def adminUser = User.findByUsername('admin') ?: new User(
 			email: "admin@yahoo.fr",
 			username: 'admin',
@@ -39,6 +42,7 @@ class BootStrap {
 			accountExpired:false, 
 			accountLocked:false, 
 			passwordExpired:false).save(failOnError: true)
+  }
 
 	if (!adminUser.authorities.contains(adminRole)) {
 		UserRole.create adminUser, adminRole
