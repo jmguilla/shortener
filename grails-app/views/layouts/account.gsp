@@ -47,9 +47,10 @@
 					  <li class="${(controllerName == 'user' && actionName == 'show' ) ? 'active' : ''}"><g:link
 							controller="user" action="show">Resume</g:link>
 					  </li>
-					  <li class="${(controllerName == 'mapping' && actionName == 'list' ) ? 'active' : ''}"><g:link
-							controller="mapping" action="list">
-							<span class="badge pull-right">{{shaddytems.length}}</span>My urls</g:link>
+					  <li class="${(controllerName == 'mapping' && actionName == 'list' ) ? 'active' : ''}"
+					  		ng-controller="MappingCtrl" ng-init="getList()">
+					  	<g:link controller="mapping" action="list">
+							<span class="badge pull-right">{{mappings.length}}</span>My urls</g:link>
 					  </li>
 					  <li class="${(controllerName == 'user' && actionName == 'edit' ) ? 'active' : ''}"><g:link
 							controller="user" action="edit">Settings</g:link></li>

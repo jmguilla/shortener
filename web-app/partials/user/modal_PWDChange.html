@@ -34,10 +34,10 @@
 						ng-model="newPWDAgain">
 				</div>
 			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
+				<button type="submit" class="btn btn-primary" ng-click="ok(currentPWD, newPWD, newPWDAgain)">Validate</button>
+			</div>
 		</form>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
-		<button type="button" class="btn btn-primary" ng-click="ok(currentPWD, newPWD, newPWDAgain)">Validate</button>
 	</div>
 </div>
