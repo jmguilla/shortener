@@ -164,10 +164,13 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
   '/dbconsole/*':                   ['permitAll'],
   '/logout/index':					        ['permitAll'],
   '/emailConfirmation/*':           ['permitAll'],
+  '/fb/*':                          ['permitAll'],
   '/**/js/**':                      ['permitAll'],
   '/**/css/**':                     ['permitAll'],
   '/**/images/**':                  ['permitAll'],
-  '/**/favicon.ico':                ['permitAll']]
+  '/**/favicon.ico':                ['permitAll'],
+  
+  ]
 
 grails.plugin.springsecurity.roleHierarchy = '''
    ROLE_ADMIN > ROLE_USER
@@ -205,3 +208,6 @@ if(!System.getenv("google-privatekey.base64")){
 //TODO defined but not used... Problem in AnalyticsService at initializing time
 google.analytics.accountId = "1051867773103-ujcp2cs6gok2jopa9iop3uetav918a68@developer.gserviceaccount.com"
 google.analytics.statsProfileId = "ga:83491938"
+
+grails.plugin.springsecurity.facebook.filter.processUrl = '/fb/j_spring_security_facebook_check'
+grails.plugin.springsecurity.facebook.filter.redirect.redirectFromUrl = '/fb/j_spring_security_facebook_redirect'
