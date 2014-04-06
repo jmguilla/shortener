@@ -86,7 +86,8 @@ shortenerServices.factory('Mapping', function($resource){
 		retrieve: {
 			method: 'GET',
 			params: {
-				actionId: 'retrieve'
+				actionId: 'retrieve',
+				format: 'json'
 			},
 			headers: {
   			'Content-Type': 'application/json',
