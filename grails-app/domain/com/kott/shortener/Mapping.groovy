@@ -13,6 +13,8 @@ class Mapping {
 
   def String shortId
   
+  def Date creationDate
+  
   static transients = ["shortId"]
   static belongsTo = [user: User]
 
@@ -26,6 +28,12 @@ class Mapping {
       }catch(Throwable t){
         errors.rejectValue('target', 'mapping.target.url.error', 'Target must be a valid URL')
       }
+    }
+  }
+  
+  def beforeValidate(){
+    if(!creationDate){
+      creationDate = new Date()
     }
   }
   
