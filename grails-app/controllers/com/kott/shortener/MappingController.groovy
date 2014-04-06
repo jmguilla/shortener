@@ -42,16 +42,8 @@ class MappingController {
   }
 
   /**
-   * Retrieves a {@link Mapping} from a shortId passed as an entry of params map.
-   * See {@link UrlMappings} for the custom mapping. This method is <bold>format</bold> aware:
-   * <ul>
-   *    <li>
-   *      JSON: renders the appropriate object as JSON if it exists, otherwise, response.status == 404.
-   *    </li>
-   *    <li>
-   *      HTML: renders the appropriate view
-   *    </li>
-   * </ul
+   * Retrieves a {@link Mapping} and render an html view from a shortId passed as an entry of params map.
+   * See {@link UrlMappings} for the custom mapping.
    * 
    */
   @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
@@ -69,28 +61,43 @@ class MappingController {
         result.message = message(code: 'rest.mapping.notfound', default: "No mapping with such shortId: ${params.shortId}", args: [params.shortId])
       }
     }
-    withFormat{
-      html{
-        if(result.mapping){
-          if(!request.xhr){
-            render view: "redirect", model: [mapping: result.mapping]
-          }else{
-            response.sendRedirect(result.mapping.target)
-          }
-        }else{
-          response.sendError(result.status, result.message)
-        }
+    if(result.mapping){
+      if(!request.xhr){
+        render view: "redirect", model: [mapping: result.mapping]
+      }else{
+        response.sendRedirect(result.mapping.target)
       }
-      json{
-        if(result.mapping){
-          def jsonMapping = JSONMapping.cloneMapping(result.mapping);
-          jsonMapping.shortUrl = g.createLink(absolute: true, uri: '/') + result.mapping.shortId;
-          result.mapping = jsonMapping;
-        }
-        response.status = result.status;
-        render(result as JSON);
-      }
+    }else{
+      response.sendError(result.status, result.message)
     }
+  }
+  
+  /**
+   * Retrieves a {@link Mapping} as JSON format from a shortId passed as an entry of params map.
+   * See {@link UrlMappings} for the custom mapping.
+   */
+  @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+  def retrieveAsJSON() {
+	def result = [status: 200]
+	if(!params.shortId){
+	  result.status = 400
+	  result.alert = 'danger'
+	  result.message = 'shortId parameter is missing'
+	}else{
+	  result.mapping = mappingService.retrieveFromShortId(params.shortId)
+	  if(!result.mapping){
+		result.status = 404
+		result.alert = 'danger'
+		result.message = message(code: 'rest.mapping.notfound', default: "No mapping with such shortId: ${params.shortId}", args: [params.shortId])
+	  }
+	}
+	if(result.mapping){
+	  def jsonMapping = JSONMapping.cloneMapping(result.mapping);
+	  jsonMapping.shortUrl = g.createLink(absolute: true, uri: '/') + result.mapping.shortId;
+	  result.mapping = jsonMapping;
+	}
+	response.status = result.status;
+	render(result as JSON);
   }
 
   /**
