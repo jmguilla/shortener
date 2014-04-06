@@ -37,6 +37,14 @@ shortenerServices.factory('User', function($resource){
 	});
 })
 
+shortenerServices.factory('GrailsNavigation', function(){
+	return {
+		navigateTo: function(controller, action, id) {
+			window.location = "/" + controller + "/" + action + "/"+ (id ? id : "");
+		}
+	};
+})
+
 shortenerServices.factory('Alert', function($rootScope, $timeout){
 	return {
 	    addAlert: function(alert, timeout) {

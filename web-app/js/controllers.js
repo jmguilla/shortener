@@ -33,7 +33,7 @@ shortenerControllers.controller("MainCtrl",
 );
 
 shortenerControllers.controller("MappingCtrl",
-		function($scope, Mapping, Alert){
+		function($scope, GrailsNavigation, Mapping, Alert){
 			
 			$scope.currentMapping = null;
 			$scope.currentMappingStats = null;
@@ -82,10 +82,6 @@ shortenerControllers.controller("MappingCtrl",
                 $scope.chart = chart;
 			}
 			
-			$scope.initListView = function(){
-				$scope.getList();
-			}
-			
 			/**
 			 * Get all mappings of current user
 			 */
@@ -112,6 +108,13 @@ shortenerControllers.controller("MappingCtrl",
 						Alert.addAlert({type: httpResponse.data.alert, content:httpResponse.data.message});
 					}
 				);
+			}
+			
+			/**
+			 * Display Mapping of given ShortId
+			 */
+			$scope.showMapping = function(shortId){
+				GrailsNavigation.navigateTo("mapping", "show", shortId);
 			}
 			
 		}

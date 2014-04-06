@@ -17,7 +17,7 @@
 					
 					<div class="panel-body">
 				    	<div>
-				    		<a href="{{currentMapping.target}}">{{currentMapping.target}}</a>
+				    		<a href="{{currentMapping.target}}" target="_blank">{{currentMapping.target}}</a>
 				    	</div>
 						<div class="well">{{currentMapping.description}}</div>
 				    	<div>shortUrl edit TODO:</div>
